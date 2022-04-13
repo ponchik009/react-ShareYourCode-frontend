@@ -10,7 +10,7 @@ import DrawerHeader from "../components/UI/DrawerHeader";
 import StyledIconButton from "../components/UI/StyledIconButton";
 import StyledDrawer from "../components/UI/StyledDrawer";
 
-import "./MainLayout.css";
+import "./MainLayout.scss";
 import UserBox from "./UserBox";
 import NavigationList from "./NavigationList";
 
@@ -39,8 +39,9 @@ const MainLayout: React.FC = ({ children }) => {
         <UserBox />
         <Divider sx={{ bgcolor: "#fff" }} />
         <NavigationList />
+        <Divider sx={{ bgcolor: "#fff" }} />
       </StyledDrawer>
-      <Container sx={{ p: 2 }}>{children}</Container>
+      <div>{children}</div>
     </>
   );
 };

@@ -1,0 +1,14 @@
+.main-page {
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 48px;
+  margin-bottom: 48px;
+
+  .logo {
+    margin-left: 20px;
+    height: 216px;
+    width: 216px;
+  }
+}
