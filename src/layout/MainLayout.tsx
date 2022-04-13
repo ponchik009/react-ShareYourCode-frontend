@@ -25,11 +25,22 @@ const MainLayout: React.FC = ({ children }) => {
   };
 
   return (
-    <>
-      <StyledIconButton sx={{ m: "56px" }}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+      }}
+    >
+      <StyledIconButton sx={{ marginLeft: "64px" }}>
         <MenuIcon onClick={handleDrawerOpen} sx={{ fontSize: "56px" }} />
       </StyledIconButton>
-      <StyledDrawer variant="persistent" anchor="left" open={open}>
+      <StyledDrawer
+        variant="persistent"
+        anchor="left"
+        open={open}
+        className="drawer"
+      >
         <DrawerHeader>
           <StyledIconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
@@ -42,7 +53,7 @@ const MainLayout: React.FC = ({ children }) => {
         <Divider sx={{ bgcolor: "#fff" }} />
       </StyledDrawer>
       <div>{children}</div>
-    </>
+    </div>
   );
 };
 

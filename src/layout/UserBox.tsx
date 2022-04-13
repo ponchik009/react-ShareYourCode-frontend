@@ -7,7 +7,8 @@ const UserBox = () => {
   return (
     <Box className="userBox">
       <StyledIconButton>
-        <AccountCircleIcon sx={{ fontSize: "112px" }} />
+        {/* <AccountCircleIcon sx={{ fontSize: "112px" }} /> */}
+        <img src="/img/hacker 2.svg" alt="кнопка входа в аккаунт" />
       </StyledIconButton>
       <Box style={{ display: "flex" }}>
         <Typography

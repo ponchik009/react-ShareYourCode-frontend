@@ -4,7 +4,16 @@
   justify-content: flex-end;
   align-items: center;
   margin-right: 48px;
-  margin-bottom: 48px;
+
+  @media only screen and (max-width: 767px) {   
+    & {  
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: flex-end;
+      align-items: center;
+      margin-right: 48px; 
+   } 
+  }
 
   .logo {
     margin-left: 20px;
