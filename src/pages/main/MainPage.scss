@@ -1,23 +1,6 @@
-.main-page {
-
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin-right: 48px;
-
-  @media only screen and (max-width: 767px) {   
-    & {  
-      display: flex;
-      flex-direction: column-reverse;
-      justify-content: flex-end;
-      align-items: center;
-      margin-right: 48px; 
-   } 
-  }
 
   .logo {
     margin-left: 20px;
     height: 216px;
     width: 216px;
   }
-}

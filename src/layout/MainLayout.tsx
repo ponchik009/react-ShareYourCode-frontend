@@ -32,7 +32,16 @@ const MainLayout: React.FC = ({ children }) => {
         alignItems: "center",
       }}
     >
-      <StyledIconButton sx={{ marginLeft: "64px" }}>
+      <StyledIconButton
+        sx={{
+          marginLeft: "64px",
+          position: "absolute",
+          width: "56px",
+          height: "56px",
+          left: "53px",
+          top: "39px",
+        }}
+      >
         <MenuIcon onClick={handleDrawerOpen} sx={{ fontSize: "56px" }} />
       </StyledIconButton>
       <StyledDrawer
@@ -52,7 +61,7 @@ const MainLayout: React.FC = ({ children }) => {
         <NavigationList />
         <Divider sx={{ bgcolor: "#fff" }} />
       </StyledDrawer>
-      <div>{children}</div>
+      <div className="page">{children}</div>
     </div>
   );
 };

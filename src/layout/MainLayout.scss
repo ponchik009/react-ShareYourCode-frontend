@@ -5,3 +5,20 @@
   align-items: center;
   padding: 24px;
 }
+
+.page {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 48px;
+
+  @media only screen and (max-width: 767px) {   
+    & {  
+      display: flex;
+      flex-direction: column-reverse;
+      justify-content: flex-end;
+      align-items: center;
+      margin-right: 48px; 
+   } 
+  }
+}
