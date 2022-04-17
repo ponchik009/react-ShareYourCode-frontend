@@ -1,55 +1,50 @@
 import React from "react";
-import "./GroupsPage.scss";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import GroupsList from "./GroupsList/GroupsList";
 
+import "../../Page.scss";
+
 const GroupsPage = () => {
-  const [page, setPage] = React.useState(0);
+  const [tab, setTab] = React.useState(0);
   const [groups, setGroups] = React.useState<Array<string>>([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setPage(newValue);
+    setTab(newValue);
   };
 
   React.useEffect(() => {
     /*
       запрос на группы
     */
-    setGroups(Array(100).fill(`Group ${page}`));
+    setGroups(Array(20).fill(`Group ${tab}`));
   }, []);
 
   React.useEffect(() => {
     /*
       запрос на группы
     */
-    setGroups(Array(100).fill(`Group ${page}`));
+    setGroups(Array(20).fill(`Group ${tab}`));
     // setGroups([]);
-  }, [page]);
+  }, [tab]);
 
   return (
-    <div className="groups-page">
+    <div className="page">
       <Box
         sx={{
           borderBottom: 1,
           borderColor: "divider",
-          display: "flex",
-          justifyContent: "cetner",
         }}
       >
-        <Tabs
-          value={page}
-          onChange={handleChange}
-          aria-label="basic tabs example"
-        >
+        <Tabs value={tab} onChange={handleChange} aria-label="basic tabs">
           <Tab label="Публичные сообщества" />
           <Tab label="Мои сообщества" />
         </Tabs>
       </Box>
       <Container
-        sx={{ overflowY: "scroll", height: "500px", marginTop: "20px" }}
+        sx={{ overflowY: "scroll", height: "600px", marginTop: "20px" }}
       >
         <GroupsList groups={groups} />
       </Container>

@@ -1,7 +1,6 @@
 import React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Button, Divider } from "@mui/material";
 import StyledIconButton from "../components/UI/StyledIconButton";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const UserBox = () => {
   return (
@@ -11,7 +10,8 @@ const UserBox = () => {
         <img src="/img/hacker 2.svg" alt="кнопка входа в аккаунт" />
       </StyledIconButton>
       <Box style={{ display: "flex" }}>
-        <Typography
+        <Button
+          variant="text"
           style={{
             fontSize: 16,
             color: "#DCDCAA",
@@ -19,9 +19,10 @@ const UserBox = () => {
           }}
         >
           Sign in&nbsp;
-        </Typography>
-        |
-        <Typography
+        </Button>
+        <Divider orientation="vertical" variant="middle" flexItem />
+        <Button
+          variant="text"
           style={{
             fontSize: 16,
             color: "#DCDCAA",
@@ -29,7 +30,7 @@ const UserBox = () => {
           }}
         >
           &nbsp;Sign up
-        </Typography>
+        </Button>
       </Box>
     </Box>
   );

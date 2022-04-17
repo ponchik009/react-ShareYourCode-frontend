@@ -1,4 +1,4 @@
-.groups-page {
+.page {
   position: absolute;
   top: 50%;  /* position the top  edge of the element at the middle of the parent */
   left: 50%; /* position the left edge of the element at the middle of the parent */
@@ -16,8 +16,8 @@
   // background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(244,37,37,1) 50%, rgba(252,176,69,1) 100%);
 
   width: 50%;
-  min-height: 60%;
-  max-height: 80%;
+  min-height: 80%;
+  max-height: 90%;
 
   overflow-y: visible;
 

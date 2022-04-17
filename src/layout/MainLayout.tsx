@@ -12,19 +12,25 @@ import StyledDrawer from "../components/UI/StyledDrawer";
 import "./MainLayout.scss";
 import UserBox from "./UserBox";
 import NavigationList from "./NavigationList";
+import AuthDialog from "../components/AuthDialog/AuthDialog";
 
 type M = MouseEvent & {
   path: Node[];
 };
 
 const MainLayout: React.FC = ({ children }) => {
-  const [open, setOpen] = React.useState(false);
+  const [openDrawer, setOpenDrawer] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState(true);
 
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const handleDrawerOpenDrawer = () => {
+    setOpenDrawer(true);
   };
   const handleDrawerClose = () => {
-    setOpen(false);
+    setOpenDrawer(false);
+  };
+
+  const handleDialogClose = () => {
+    setOpenDialog(false);
   };
 
   React.useEffect(() => {
@@ -51,12 +57,12 @@ const MainLayout: React.FC = ({ children }) => {
           top: "39px",
         }}
       >
-        <MenuIcon onClick={handleDrawerOpen} sx={{ fontSize: "56px" }} />
+        <MenuIcon onClick={handleDrawerOpenDrawer} sx={{ fontSize: "56px" }} />
       </StyledIconButton>
       <StyledDrawer
         variant="persistent"
         anchor="left"
-        open={open}
+        open={openDrawer}
         className="drawer"
       >
         <DrawerHeader>
@@ -70,7 +76,8 @@ const MainLayout: React.FC = ({ children }) => {
         <NavigationList />
         <Divider sx={{ bgcolor: "#fff" }} />
       </StyledDrawer>
-      <div className="page">{children}</div>
+      <AuthDialog isOpen={openDialog} onClose={handleDialogClose} />
+      <div className="wrapper">{children}</div>
     </div>
   );
 };

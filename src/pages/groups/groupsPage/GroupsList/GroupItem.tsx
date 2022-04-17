@@ -1,4 +1,4 @@
-import { ListItem, Typography } from "@mui/material";
+import { Divider, ListItemButton, Typography } from "@mui/material";
 import React from "react";
 
 interface IProps {
@@ -7,9 +7,12 @@ interface IProps {
 
 const GroupItem: React.FC<IProps> = ({ group }) => {
   return (
-    <ListItem>
-      <Typography>{group}</Typography>
-    </ListItem>
+    <>
+      <ListItemButton>
+        <Typography>{group}</Typography>
+      </ListItemButton>
+      <Divider />
+    </>
   );
 };
 
