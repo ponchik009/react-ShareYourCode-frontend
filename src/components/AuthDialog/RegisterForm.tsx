@@ -66,15 +66,30 @@ const RegisterForm = () => {
   };
 
   const validate = () => {
-    if (!email.length) handleEmailError("Заполните поле!");
-    else if (!validateEmail()) handleEmailError("Невалидный email!");
-    if (!name.length) handleNameError("Заполните поле!");
-    if (!password.length) handlePasswordError("Заполните поле!");
-    else if (!comparePasswords()) handlePasswordError("Пароли не совпадают!");
+    let check = true;
+    if (!email.length) {
+      handleEmailError("Заполните поле!");
+      check = false;
+    } else if (!validateEmail()) {
+      handleEmailError("Невалидный email!");
+      check = false;
+    }
+    if (!name.length) {
+      handleNameError("Заполните поле!");
+      check = false;
+    }
+    if (!password.length) {
+      handlePasswordError("Заполните поле!");
+      check = false;
+    } else if (!comparePasswords()) {
+      handlePasswordError("Пароли не совпадают!");
+      check = false;
+    }
+    return check;
   };
 
   const handleRegister = () => {
-    validate();
+    if (!validate()) return;
     // запрос на регистрацию, изменение глобал стейта
   };
 
