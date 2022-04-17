@@ -1,5 +1,4 @@
 import React from "react";
-import { Container } from "@mui/material";
 
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
@@ -14,6 +13,10 @@ import "./MainLayout.scss";
 import UserBox from "./UserBox";
 import NavigationList from "./NavigationList";
 
+type M = MouseEvent & {
+  path: Node[];
+};
+
 const MainLayout: React.FC = ({ children }) => {
   const [open, setOpen] = React.useState(false);
 
@@ -23,6 +26,12 @@ const MainLayout: React.FC = ({ children }) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  React.useEffect(() => {
+    // document.body.onclick = (e: MouseEvent) => {
+    //   console.log(e.composedPath());
+    // };
+  }, []);
 
   return (
     <div

@@ -1,22 +1,22 @@
 const NAVIGATION_LIST = [
   {
     id: 1,
-    name: "Home",
+    name: "Главная",
     link: "/home",
   },
   {
     id: 2,
-    name: "Groups",
+    name: "Сообщества",
     link: "/groups",
   },
   {
     id: 3,
-    name: "Create group",
+    name: "Создать сообщество",
     link: "/groups/create",
   },
   {
     id: 4,
-    name: "About",
+    name: "О нас",
     link: "/about",
   },
   {

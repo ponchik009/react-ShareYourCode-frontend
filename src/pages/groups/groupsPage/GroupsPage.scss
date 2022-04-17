@@ -1,4 +1,4 @@
-.error-page {
+.groups-page {
   position: absolute;
   top: 50%;  /* position the top  edge of the element at the middle of the parent */
   left: 50%; /* position the left edge of the element at the middle of the parent */
@@ -12,8 +12,13 @@
   padding: 50px 10px;
   border-radius: 50px 10px 50px 10px;
 
-  background: rgb(131,58,180);
-  background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(244,37,37,1) 50%, rgba(252,176,69,1) 100%);
+  background: rgb(144,210,245);
+  // background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(244,37,37,1) 50%, rgba(252,176,69,1) 100%);
 
   width: 50%;
+  min-height: 60%;
+  max-height: 80%;
+
+  overflow-y: visible;
+
 }

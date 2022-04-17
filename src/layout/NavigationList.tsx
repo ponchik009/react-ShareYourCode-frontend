@@ -7,7 +7,7 @@ import NAVIGATION_LIST from "../const/navigation";
 
 const NavigationList = () => {
   const navigate = useNavigate();
-  console.log(navigate);
+  // console.log(navigate);
 
   return (
     <List>
