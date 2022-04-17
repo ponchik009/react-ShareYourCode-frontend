@@ -20,7 +20,8 @@ type M = MouseEvent & {
 
 const MainLayout: React.FC = ({ children }) => {
   const [openDrawer, setOpenDrawer] = React.useState(false);
-  const [openDialog, setOpenDialog] = React.useState(true);
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [isLoginDialog, setIsLoginDialog] = React.useState(true);
 
   const handleDrawerOpenDrawer = () => {
     setOpenDrawer(true);
@@ -29,8 +30,20 @@ const MainLayout: React.FC = ({ children }) => {
     setOpenDrawer(false);
   };
 
+  const handleDialogOpen = () => {
+    setOpenDialog(true);
+  };
   const handleDialogClose = () => {
     setOpenDialog(false);
+  };
+
+  const handleSignIn = () => {
+    handleDialogOpen();
+    setIsLoginDialog(true);
+  };
+  const handleSignUp = () => {
+    handleDialogOpen();
+    setIsLoginDialog(false);
   };
 
   React.useEffect(() => {
@@ -71,12 +84,16 @@ const MainLayout: React.FC = ({ children }) => {
           </StyledIconButton>
         </DrawerHeader>
         <Divider sx={{ bgcolor: "#fff" }} />
-        <UserBox />
+        <UserBox handleSignIn={handleSignIn} handleSignUp={handleSignUp} />
         <Divider sx={{ bgcolor: "#fff" }} />
         <NavigationList />
         <Divider sx={{ bgcolor: "#fff" }} />
       </StyledDrawer>
-      <AuthDialog isOpen={openDialog} onClose={handleDialogClose} />
+      <AuthDialog
+        isOpen={openDialog}
+        onClose={handleDialogClose}
+        isLogin={isLoginDialog}
+      />
       <div className="wrapper">{children}</div>
     </div>
   );

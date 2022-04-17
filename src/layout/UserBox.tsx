@@ -2,10 +2,15 @@ import React from "react";
 import { Box, Button, Divider } from "@mui/material";
 import StyledIconButton from "../components/UI/StyledIconButton";
 
-const UserBox = () => {
+interface IProps {
+  handleSignIn: () => void;
+  handleSignUp: () => void;
+}
+
+const UserBox: React.FC<IProps> = ({ handleSignIn, handleSignUp }) => {
   return (
     <Box className="userBox">
-      <StyledIconButton>
+      <StyledIconButton onClick={handleSignIn}>
         {/* <AccountCircleIcon sx={{ fontSize: "112px" }} /> */}
         <img src="/img/hacker 2.svg" alt="кнопка входа в аккаунт" />
       </StyledIconButton>
@@ -15,8 +20,8 @@ const UserBox = () => {
           style={{
             fontSize: 16,
             color: "#DCDCAA",
-            cursor: "pointer",
           }}
+          onClick={handleSignIn}
         >
           Sign in&nbsp;
         </Button>
@@ -26,8 +31,8 @@ const UserBox = () => {
           style={{
             fontSize: 16,
             color: "#DCDCAA",
-            cursor: "pointer",
           }}
+          onClick={handleSignUp}
         >
           &nbsp;Sign up
         </Button>

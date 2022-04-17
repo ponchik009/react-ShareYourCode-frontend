@@ -6,14 +6,19 @@ import RegisterForm from "./RegisterForm";
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
+  isLogin: boolean;
 }
 
-const AuthDialog: React.FC<IProps> = ({ isOpen, onClose }) => {
+const AuthDialog: React.FC<IProps> = ({ isOpen, onClose, isLogin }) => {
   const [tab, setTab] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
   };
+
+  React.useEffect(() => {
+    setTab(isLogin ? 0 : 1);
+  }, [isLogin]);
 
   return (
     <Dialog open={isOpen} onClose={onClose}>
