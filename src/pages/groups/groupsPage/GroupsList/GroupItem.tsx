@@ -1,22 +1,18 @@
 import { Divider, ListItemButton, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { IGroup } from "../../../../interfaces/entities";
 
 interface IProps {
-  group: string;
+  group: IGroup;
+  onClick: () => void;
 }
 
-const GroupItem: React.FC<IProps> = ({ group }) => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate(`/groups/${1}`);
-  };
-
+const GroupItem: React.FC<IProps> = ({ group, onClick }) => {
   return (
     <>
-      <ListItemButton onClick={handleClick}>
-        <Typography>{group}</Typography>
+      <ListItemButton onClick={onClick}>
+        <Typography>{group.name}</Typography>
       </ListItemButton>
       <Divider />
     </>

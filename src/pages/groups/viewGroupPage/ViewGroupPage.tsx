@@ -1,41 +1,73 @@
 import React from "react";
-import { Typography, Box, Container } from "@mui/material";
-import { useParams } from "react-router-dom";
+import { Typography, Box, Container, Button } from "@mui/material";
+import { useNavigate, useParams } from "react-router-dom";
 import TredsList from "./TredsList/TredsList";
 import UsersList from "./UsersList/UsersList";
+import { IGroup } from "../../../interfaces/entities";
+import InviteDialog from "../../../components/InviteDialog/InviteDialog";
 
 const ViewGroupPage = () => {
   const { id } = useParams();
-  const [group, setGroup] = React.useState({
-    name: "",
-    description: "",
-    treds: [{ name: "" }],
-    members: [{ name: "" }],
-  });
+  const [group, setGroup] = React.useState<IGroup | null>(null);
+  const [isInviteDialogOpen, setIsInviteDialogOpen] = React.useState(false);
+  const navigate = useNavigate();
+
+  const handleCreateTred = () => {
+    navigate("/treds/create");
+  };
+
+  const handleInviteDialogOpen = () => {
+    setIsInviteDialogOpen(true);
+  };
+
+  const handleInviteDialogClose = () => {
+    setIsInviteDialogOpen(false);
+  };
 
   React.useEffect(() => {
     // запрос на получение группы
     setGroup({
+      id: 1,
       name: "Отряд сосистеров!!!",
       description: "Крутая ваще группа!!",
-      treds: [{ name: "Тред 1" }, { name: "Тред 2" }],
-      members: [{ name: "Пользователь 1" }, { name: "Пользователь 2" }],
+      treds: Array(100).fill({ id: 1, name: "Тред" }),
+      members: Array(100).fill({
+        id: 1,
+        name: "Пользователь",
+      }),
     });
   }, []);
 
   return (
     <div className="page">
-      <Typography>{`Group with ID = ${id}\n${group.name}`}</Typography>
-      <Box sx={{ display: "flex", marginTop: "20px" }}>
-        <Container
-          sx={{ overflowY: "scroll", height: "600px", width: "2500px" }}
-        >
-          <TredsList />
-        </Container>
-        <Container sx={{ overflowY: "scroll", height: "600px" }}>
-          <UsersList />
-        </Container>
-      </Box>
+      {group && (
+        <>
+          <Typography>{`Group with ID = ${id}\n${group.name}`}</Typography>
+          <Box sx={{ display: "flex", marginTop: "20px" }}>
+            <Container sx={{ width: "1500px" }}>
+              <TredsList treds={group.treds} />
+              <Button onClick={handleCreateTred}>Создать тред</Button>
+            </Container>
+            <Container
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                alignItems: "end",
+              }}
+            >
+              <UsersList members={group.members} />
+              <Button onClick={handleInviteDialogOpen}>
+                Приласить в сообщество
+              </Button>
+            </Container>
+          </Box>
+          <InviteDialog
+            isOpen={isInviteDialogOpen}
+            onClose={handleInviteDialogClose}
+          />
+        </>
+      )}
     </div>
   );
 };

@@ -1,7 +1,34 @@
 import React from "react";
+import { Button, List, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import TredItem from "./TredItem";
+import { ITred } from "../../../../interfaces/entities";
 
-const TredsList = () => {
-  return <div>TredsList</div>;
+interface IProps {
+  treds: ITred[];
+}
+
+const TredsList: React.FC<IProps> = ({ treds }) => {
+  const navigate = useNavigate();
+
+  const handleClick = (id: number) => {
+    navigate(`/treds/${id}`);
+  };
+
+  return (
+    <List sx={{ overflowY: "scroll", height: "600px", width: "100%" }}>
+      {treds.length > 0 ? (
+        treds.map((tred: ITred) => (
+          <TredItem tred={tred} onClick={() => handleClick(tred.id)} />
+        ))
+      ) : (
+        <>
+          <Typography>В этой группе пока нет тредов</Typography>
+          <Button variant="text">Создать тред</Button>
+        </>
+      )}
+    </List>
+  );
 };
 
 export default TredsList;

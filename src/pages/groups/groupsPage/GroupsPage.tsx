@@ -6,10 +6,11 @@ import Box from "@mui/material/Box";
 import GroupsList from "./GroupsList/GroupsList";
 
 import "../../Page.scss";
+import { IGroup } from "../../../interfaces/entities";
 
 const GroupsPage = () => {
   const [tab, setTab] = React.useState(0);
-  const [groups, setGroups] = React.useState<Array<string>>([]);
+  const [groups, setGroups] = React.useState<IGroup[]>([]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setTab(newValue);
@@ -19,14 +20,14 @@ const GroupsPage = () => {
     /*
       запрос на группы
     */
-    setGroups(Array(20).fill(`Group ${tab}`));
+    setGroups(Array(20).fill({ name: `Group ${tab}` }));
   }, []);
 
   React.useEffect(() => {
     /*
       запрос на группы
     */
-    setGroups(Array(20).fill(`Group ${tab}`));
+    setGroups(Array(20).fill({ name: `Group ${tab}` }));
     // setGroups([]);
   }, [tab]);
 
