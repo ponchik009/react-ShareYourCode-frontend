@@ -1,18 +1,19 @@
 import React from "react";
 import { Button, List, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TredItem from "./TredItem";
 import { ITred } from "../../../../interfaces/entities";
 
 interface IProps {
   treds: ITred[];
+  groupId: number;
 }
 
-const TredsList: React.FC<IProps> = ({ treds }) => {
+const TredsList: React.FC<IProps> = ({ treds, groupId }) => {
   const navigate = useNavigate();
 
   const handleClick = (id: number) => {
-    navigate(`/treds/${id}`);
+    navigate(`/groups/${groupId}/treds/${id}`);
   };
 
   return (

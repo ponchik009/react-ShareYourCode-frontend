@@ -5,6 +5,7 @@ import UserItem from "./UserItem";
 
 interface IProps {
   members: IUser[];
+  groupId: number;
 }
 
 const UsersList: React.FC<IProps> = ({ members }) => {

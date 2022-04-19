@@ -19,8 +19,11 @@ const AppRouter = () => {
       <Route path="/groups" element={<GroupsPage />} />
       <Route path="/groups/create" element={<CreateGroupPage />} />
       <Route path="/groups/:id" element={<ViewGroupPage />} />
-      <Route path="/treds/:id" element={<ViewTredPage />} />
-      <Route path="/treds/create" element={<CreateTredPage />} />
+      <Route path="/groups/:groupId/treds/:tredId" element={<ViewTredPage />} />
+      <Route
+        path="/groups/:groupId/treds/create"
+        element={<CreateTredPage />}
+      />
       <Route path="/package/create" element={<CreatePackagePage />} />
       <Route path="/package/:id" element={<ViewPackagePage />} />
       <Route path="/about" element={<AboutPage />} />

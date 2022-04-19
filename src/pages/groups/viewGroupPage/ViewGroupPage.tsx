@@ -13,7 +13,7 @@ const ViewGroupPage = () => {
   const navigate = useNavigate();
 
   const handleCreateTred = () => {
-    navigate("/treds/create");
+    navigate(`/groups/${id}/treds/create`);
   };
 
   const handleInviteDialogOpen = () => {
@@ -45,7 +45,7 @@ const ViewGroupPage = () => {
           <Typography>{`Group with ID = ${id}\n${group.name}`}</Typography>
           <Box sx={{ display: "flex", marginTop: "20px" }}>
             <Container sx={{ width: "1500px" }}>
-              <TredsList treds={group.treds} />
+              <TredsList treds={group.treds} groupId={+id!} />
               <Button onClick={handleCreateTred}>Создать тред</Button>
             </Container>
             <Container
@@ -56,7 +56,7 @@ const ViewGroupPage = () => {
                 alignItems: "end",
               }}
             >
-              <UsersList members={group.members} />
+              <UsersList members={group.members} groupId={+id!} />
               <Button onClick={handleInviteDialogOpen}>
                 Приласить в сообщество
               </Button>
