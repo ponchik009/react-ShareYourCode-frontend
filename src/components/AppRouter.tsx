@@ -24,8 +24,14 @@ const AppRouter = () => {
         path="/groups/:groupId/treds/create"
         element={<CreateTredPage />}
       />
-      <Route path="/package/create" element={<CreatePackagePage />} />
-      <Route path="/package/:id" element={<ViewPackagePage />} />
+      <Route
+        path="/groups/:groupId/treds/:tredId/packages/create"
+        element={<CreatePackagePage />}
+      />
+      <Route
+        path="/groups/:groupId/treds/:tredId/packages/:packageId"
+        element={<ViewPackagePage />}
+      />
       <Route path="/about" element={<AboutPage />} />
       <Route path="*" element={<ErrorPage />} />
     </Routes>

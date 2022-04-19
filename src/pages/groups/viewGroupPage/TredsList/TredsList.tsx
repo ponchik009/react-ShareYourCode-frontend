@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, List, Typography } from "@mui/material";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import TredItem from "./TredItem";
 import { ITred } from "../../../../interfaces/entities";
 
