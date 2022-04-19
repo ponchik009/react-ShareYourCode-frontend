@@ -30,8 +30,8 @@ const ViewGroupPage = () => {
       id: 1,
       name: "Отряд сосистеров!!!",
       description: "Крутая ваще группа!!",
-      treds: Array(100).fill({ id: 1, name: "Тред" }),
-      members: Array(100).fill({
+      treds: Array(20).fill({ id: 1, name: "Тред" }),
+      members: Array(20).fill({
         id: 1,
         name: "Пользователь",
       }),
@@ -65,6 +65,7 @@ const ViewGroupPage = () => {
           <InviteDialog
             isOpen={isInviteDialogOpen}
             onClose={handleInviteDialogClose}
+            id={group.id}
           />
         </>
       )}

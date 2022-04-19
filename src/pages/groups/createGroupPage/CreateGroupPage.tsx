@@ -1,5 +1,6 @@
 import { Box, Button, Switch, TextField, Typography } from "@mui/material";
 import React, { ChangeEventHandler } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "../../Page.scss";
 
@@ -7,6 +8,7 @@ const CreateGroupPage = () => {
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
   const [isPublic, setIsPublic] = React.useState(false);
+  const navigate = useNavigate();
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -23,6 +25,7 @@ const CreateGroupPage = () => {
   const handleCreateClick = () => {
     // отправка запроса на создание
     // редирект на страницу группы
+    navigate("/groups/1");
   };
 
   return (
