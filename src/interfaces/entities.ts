@@ -27,3 +27,8 @@ export interface IPackage {
   id: number;
   name: string;
 }
+
+export interface ILanguage {
+  id: number;
+  name: string;
+}

@@ -23,9 +23,14 @@ const UserBox: React.FC<IProps> = ({ handleSignIn, handleSignUp }) => {
           }}
           onClick={handleSignIn}
         >
-          Sign in&nbsp;
+          Sign in
         </Button>
-        <Divider orientation="vertical" variant="middle" flexItem />
+        <Divider
+          orientation="vertical"
+          variant="middle"
+          flexItem
+          sx={{ backgroundColor: "#DCDCAA" }}
+        />
         <Button
           variant="text"
           style={{
@@ -34,7 +39,7 @@ const UserBox: React.FC<IProps> = ({ handleSignIn, handleSignUp }) => {
           }}
           onClick={handleSignUp}
         >
-          &nbsp;Sign up
+          Sign up
         </Button>
       </Box>
     </Box>
