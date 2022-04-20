@@ -23,7 +23,7 @@ const MainLayout: React.FC = ({ children }) => {
   const [openDialog, setOpenDialog] = React.useState(false);
   const [isLoginDialog, setIsLoginDialog] = React.useState(true);
 
-  const handleDrawerOpenDrawer = () => {
+  const handleDrawerOpen = () => {
     setOpenDrawer(true);
   };
   const handleDrawerClose = () => {
@@ -70,13 +70,14 @@ const MainLayout: React.FC = ({ children }) => {
           top: "39px",
         }}
       >
-        <MenuIcon onClick={handleDrawerOpenDrawer} sx={{ fontSize: "56px" }} />
+        <MenuIcon onClick={handleDrawerOpen} sx={{ fontSize: "56px" }} />
       </StyledIconButton>
       <StyledDrawer
         variant="persistent"
         anchor="left"
         open={openDrawer}
         className="drawer"
+        onClose={handleDrawerClose}
       >
         <DrawerHeader>
           <StyledIconButton onClick={handleDrawerClose}>

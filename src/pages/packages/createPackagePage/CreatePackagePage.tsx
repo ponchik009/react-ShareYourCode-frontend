@@ -10,18 +10,43 @@ import {
   Button,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { ILanguage } from "../../../interfaces/entities";
+import CompileResultDialog from "../../../components/CompileResultDialog/CompileResultDialog";
 
 const CreatePackagePage = () => {
   const [code, setCode] = React.useState("");
   const [languageId, setLanguageId] = React.useState("");
-
   const [languages, setLanguages] = React.useState<Array<ILanguage>>([]);
 
-  const { tredId } = useParams();
+  const [stdout, setStdout] = React.useState("");
+  const [stderr, setStderr] = React.useState("");
+  const [isDialogResultOpen, setIsDialogResultOpen] = React.useState(false);
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const handleDialogOpen = () => {
+    setIsDialogResultOpen(true);
+  };
+  const handleDialogClose = () => {
+    setIsDialogResultOpen(false);
+  };
+  const handleCompile = () => {
+    // отправляем код на компиляцию
+    // записываем результаты и открываем окно
+    handleDialogOpen();
+    setStdout("очень хороший результат");
+    setStderr("упс... ошибочки\nerr1\nerr2");
+  };
+
+  const { groupId, tredId } = useParams();
+  const navigate = useNavigate();
+
+  const handleCreate = () => {
+    // запрос на создание посылки
+    // редиректим на страницу треда
+    navigate(`/groups/${groupId}/treds/${tredId}`);
+  };
+
+  const handleLanguageChange = (event: SelectChangeEvent) => {
     setLanguageId(event.target.value);
   };
 
@@ -66,7 +91,11 @@ const CreatePackagePage = () => {
         <Box sx={{ padding: "20px" }}>
           <FormControl fullWidth>
             <InputLabel>Язык</InputLabel>
-            <Select value={languageId} label="Язык" onChange={handleChange}>
+            <Select
+              value={languageId}
+              label="Язык"
+              onChange={handleLanguageChange}
+            >
               {languages.length &&
                 languages.map((language) => (
                   <MenuItem value={language.id} key={language.id}>
@@ -92,11 +121,17 @@ const CreatePackagePage = () => {
             sx={{ marginTop: "10px" }}
           />
           <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-            <Button>Скомпилировать</Button>
-            <Button>Сохранить</Button>
+            <Button onClick={handleCompile}>Скомпилировать</Button>
+            <Button onClick={handleCreate}>Сохранить</Button>
           </Box>
         </Box>
       </Box>
+      <CompileResultDialog
+        isOpen={isDialogResultOpen}
+        onClose={handleDialogClose}
+        stdout={stdout}
+        stderr={stderr}
+      />
     </div>
   );
 };
