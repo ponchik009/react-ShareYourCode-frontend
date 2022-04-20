@@ -18,7 +18,7 @@ const AppRouter = () => {
       <Route path="/home" element={<MainPage />} />
       <Route path="/groups" element={<GroupsPage />} />
       <Route path="/groups/create" element={<CreateGroupPage />} />
-      <Route path="/groups/:id" element={<ViewGroupPage />} />
+      <Route path="/groups/:groupId" element={<ViewGroupPage />} />
       <Route path="/groups/:groupId/treds/:tredId" element={<ViewTredPage />} />
       <Route
         path="/groups/:groupId/treds/create"

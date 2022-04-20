@@ -7,13 +7,13 @@ import { IGroup } from "../../../interfaces/entities";
 import InviteDialog from "../../../components/InviteDialog/InviteDialog";
 
 const ViewGroupPage = () => {
-  const { id } = useParams();
+  const { groupId } = useParams();
   const [group, setGroup] = React.useState<IGroup | null>(null);
   const [isInviteDialogOpen, setIsInviteDialogOpen] = React.useState(false);
   const navigate = useNavigate();
 
   const handleCreateTred = () => {
-    navigate(`/groups/${id}/treds/create`);
+    navigate(`/groups/${groupId}/treds/create`);
   };
 
   const handleInviteDialogOpen = () => {
@@ -42,10 +42,10 @@ const ViewGroupPage = () => {
     <div className="page">
       {group && (
         <>
-          <Typography>{`Group with ID = ${id}\n${group.name}`}</Typography>
+          <Typography>{`Group with ID = ${groupId}\n${group.name}`}</Typography>
           <Box sx={{ display: "flex", marginTop: "20px" }}>
             <Container sx={{ width: "1500px" }}>
-              <TredsList treds={group.treds} groupId={+id!} />
+              <TredsList treds={group.treds} groupId={+groupId!} />
               <Button onClick={handleCreateTred}>Создать тред</Button>
             </Container>
             <Container
@@ -56,7 +56,7 @@ const ViewGroupPage = () => {
                 alignItems: "end",
               }}
             >
-              <UsersList members={group.members} groupId={+id!} />
+              <UsersList members={group.members} groupId={+groupId!} />
               <Button onClick={handleInviteDialogOpen}>
                 Приласить в сообщество
               </Button>
