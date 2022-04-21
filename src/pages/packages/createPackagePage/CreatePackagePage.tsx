@@ -18,6 +18,8 @@ const CreatePackagePage = () => {
   const [code, setCode] = React.useState("");
   const [languageId, setLanguageId] = React.useState("");
   const [languages, setLanguages] = React.useState<Array<ILanguage>>([]);
+  const [stdin, setStdin] = React.useState("");
+  const [cmdInput, setCmdInput] = React.useState("");
 
   const [stdout, setStdout] = React.useState("");
   const [stderr, setStderr] = React.useState("");
@@ -108,16 +110,20 @@ const CreatePackagePage = () => {
             label="Стандартный поток ввода"
             fullWidth
             multiline
-            // value={maxPackages}
-            // onChange={handlePackagesChange}
+            value={stdin}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setStdin(event.target.value);
+            }}
             sx={{ marginTop: "10px" }}
           />
           <TextField
             label="Аргументы командной строки"
             fullWidth
             multiline
-            // value={maxPackages}
-            // onChange={handlePackagesChange}
+            value={cmdInput}
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+              setCmdInput(event.target.value);
+            }}
             sx={{ marginTop: "10px" }}
           />
           <Box sx={{ display: "flex", justifyContent: "space-around" }}>

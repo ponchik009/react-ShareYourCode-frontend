@@ -32,3 +32,13 @@ export interface ILanguage {
   id: number;
   name: string;
 }
+
+export interface IPackageFull {
+  id: number;
+  code: string;
+  user: IUser;
+  tred: ITred;
+  comments: string[];
+  language: ILanguage;
+  review: string | null;
+}
