@@ -50,6 +50,7 @@ const ViewPackagePage = () => {
       user: {
         id: 1,
         name: "ponchik009",
+        isPublic: true,
       },
       tred: {
         id: 1,

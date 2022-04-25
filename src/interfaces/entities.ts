@@ -9,6 +9,7 @@ export interface IGroup {
 export interface IUser {
   id: number;
   name: string;
+  isPublic: boolean;
 }
 
 export interface ITred {
