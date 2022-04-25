@@ -1,9 +1,9 @@
 import React from "react";
-import "./AboutPage.scss";
+import "../Page.scss";
 
 const AboutPage = () => {
   return (
-    <div className="about-page">
+    <div className="custom-page">
       <p>
         Данный проект - результат больной фантазии студента Иркутского
         политехнического института.

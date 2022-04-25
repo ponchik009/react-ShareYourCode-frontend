@@ -1,9 +1,21 @@
-import { Button, DialogActions, DialogContent, TextField } from "@mui/material";
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  TextField,
+  Typography,
+} from "@mui/material";
 import React from "react";
 
-const LoginForm = () => {
+interface ILogInProps {
+  signIn: (email: string, password: string) => Promise<string | undefined>;
+  onClose: () => void;
+}
+
+const LoginForm: React.FC<ILogInProps> = ({ signIn, onClose }) => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [error, setError] = React.useState("");
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -12,13 +24,21 @@ const LoginForm = () => {
     setPassword(event.target.value);
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // запрос на логин, изменение глобал стейта
+    const authError = await signIn(email, password);
+    if (authError) {
+      setError(authError);
+    } else {
+      setError("");
+      onClose();
+    }
   };
 
   return (
     <>
       <DialogContent sx={{ padding: "20px" }}>
+        {error && <Typography>{error}</Typography>}
         <TextField
           label="Email"
           fullWidth

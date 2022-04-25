@@ -10,19 +10,25 @@ import StyledIconButton from "../components/UI/StyledIconButton";
 import StyledDrawer from "../components/UI/StyledDrawer";
 
 import "./MainLayout.scss";
-import UserBox from "./UserBox";
+import UnauthorizedBox from "./UnauthorizedBox";
 import NavigationList from "./NavigationList";
 import AuthDialog from "../components/AuthDialog/AuthDialog";
+import { useDispatch } from "react-redux";
+import { getUser, logIn, logOut } from "../store/action/auth";
+import UserBox from "./UserBox";
 
-type M = MouseEvent & {
-  path: Node[];
-};
+interface ILayoutProps {
+  isAuth: boolean;
+}
 
-const MainLayout: React.FC = ({ children }) => {
+const MainLayout: React.FC<ILayoutProps> = ({ children, isAuth }) => {
+  const dispatch = useDispatch();
+
   const [openDrawer, setOpenDrawer] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState(false);
   const [isLoginDialog, setIsLoginDialog] = React.useState(true);
 
+  // открытие шторки
   const handleDrawerOpen = () => {
     setOpenDrawer(true);
   };
@@ -30,6 +36,7 @@ const MainLayout: React.FC = ({ children }) => {
     setOpenDrawer(false);
   };
 
+  // открытие модалки логина
   const handleDialogOpen = () => {
     setOpenDialog(true);
   };
@@ -37,6 +44,7 @@ const MainLayout: React.FC = ({ children }) => {
     setOpenDialog(false);
   };
 
+  // переключение табов модалки
   const handleSignIn = () => {
     handleDialogOpen();
     setIsLoginDialog(true);
@@ -46,10 +54,16 @@ const MainLayout: React.FC = ({ children }) => {
     setIsLoginDialog(false);
   };
 
+  // авторизация и выход с аккаута
+  const signIn = (email: string, password: string) => {
+    return logIn(email, password)(dispatch).then((error) => error);
+  };
+  const signOut = () => {
+    logOut()(dispatch);
+  };
+
   React.useEffect(() => {
-    // document.body.onclick = (e: MouseEvent) => {
-    //   console.log(e.composedPath());
-    // };
+    getUser()(dispatch);
   }, []);
 
   return (
@@ -85,7 +99,14 @@ const MainLayout: React.FC = ({ children }) => {
           </StyledIconButton>
         </DrawerHeader>
         <Divider sx={{ bgcolor: "#fff" }} />
-        <UserBox handleSignIn={handleSignIn} handleSignUp={handleSignUp} />
+        {isAuth ? (
+          <UserBox signOut={signOut} />
+        ) : (
+          <UnauthorizedBox
+            handleSignIn={handleSignIn}
+            handleSignUp={handleSignUp}
+          />
+        )}
         <Divider sx={{ bgcolor: "#fff" }} />
         <NavigationList />
         <Divider sx={{ bgcolor: "#fff" }} />
@@ -94,6 +115,7 @@ const MainLayout: React.FC = ({ children }) => {
         isOpen={openDialog}
         onClose={handleDialogClose}
         isLogin={isLoginDialog}
+        signIn={signIn}
       />
       <div className="wrapper">{children}</div>
     </div>

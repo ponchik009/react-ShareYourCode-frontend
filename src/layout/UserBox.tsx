@@ -1,30 +1,31 @@
 import React from "react";
-import { Box, Button, Divider } from "@mui/material";
-import StyledIconButton from "../components/UI/StyledIconButton";
+import { Box, Button, Divider, Typography } from "@mui/material";
+import { useAppSelector } from "../hooks/hooks";
 
-interface IProps {
-  handleSignIn: () => void;
-  handleSignUp: () => void;
+interface IUserBoxProps {
+  signOut: () => void;
 }
 
-const UserBox: React.FC<IProps> = ({ handleSignIn, handleSignUp }) => {
+const UserBox: React.FC<IUserBoxProps> = ({ signOut }) => {
+  const { user } = useAppSelector((state) => state.auth);
   return (
     <Box className="userBox">
-      <StyledIconButton onClick={handleSignIn}>
-        {/* <AccountCircleIcon sx={{ fontSize: "112px" }} /> */}
-        <img src="/img/hacker 2.svg" alt="кнопка входа в аккаунт" />
-      </StyledIconButton>
-      <Box style={{ display: "flex" }}>
-        <Button
-          variant="text"
+      <img src="/img/user.svg" alt="иконка юзера" />
+      <Box
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        <Typography
           style={{
             fontSize: 16,
             color: "#DCDCAA",
+            paddingRight: 5,
           }}
-          onClick={handleSignIn}
         >
-          Sign in
-        </Button>
+          {user ? user.name : "пожилой диплодок"}
+        </Typography>
         <Divider
           orientation="vertical"
           variant="middle"
@@ -37,9 +38,9 @@ const UserBox: React.FC<IProps> = ({ handleSignIn, handleSignUp }) => {
             fontSize: 16,
             color: "#DCDCAA",
           }}
-          onClick={handleSignUp}
+          onClick={signOut}
         >
-          Sign up
+          Sign out
         </Button>
       </Box>
     </Box>
