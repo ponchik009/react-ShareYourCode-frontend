@@ -1,17 +1,16 @@
 import React from "react";
-import { IUser } from "../../../../interfaces/entities";
-import { Button, List, Typography } from "@mui/material";
+import { IUser, IUserItem } from "../../../../interfaces/entities";
+import { Box, Button, List, Typography } from "@mui/material";
 import UserItem from "./UserItem";
+import UserSimpleItem from "./UserSimpleItem";
 
 interface IProps {
-  members: IUser[];
+  members: IUserItem[];
   groupId: number;
+  isAdmin: boolean;
 }
 
-const UsersList: React.FC<IProps> = ({ members }) => {
-  // проверка на админа
-  const Item = UserItem;
-
+const UsersList: React.FC<IProps> = ({ members, isAdmin }) => {
   const handleDelegateAdmin = (id: number) => {
     const answer = window.confirm(
       "Вы точно хотите передать админские права этому челу?"
@@ -27,27 +26,38 @@ const UsersList: React.FC<IProps> = ({ members }) => {
   };
 
   return (
-    <List
+    <Box
       sx={{
         overflowY: "scroll",
         height: "600px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        width: "100%",
       }}
     >
-      {members.length > 0 ? (
-        members.map((user: IUser) => (
-          <Item
-            user={user}
-            onDelegateAdmin={() => handleDelegateAdmin(user.id)}
-            onKickOut={() => handleKickOut(user.id)}
-          />
-        ))
-      ) : (
-        <>
-          <Typography>В этой группе пока нет тредов</Typography>
-          <Button variant="text">Создать тред</Button>
-        </>
-      )}
-    </List>
+      <Typography>Участники сообщества</Typography>
+      <List>
+        {members.length > 0 ? (
+          members.map((user) =>
+            isAdmin ? (
+              <UserItem
+                user={user}
+                onDelegateAdmin={() => handleDelegateAdmin(user.id)}
+                onKickOut={() => handleKickOut(user.id)}
+              />
+            ) : (
+              <UserSimpleItem user={user} />
+            )
+          )
+        ) : (
+          <>
+            <Typography>В этой группе пока нет тредов</Typography>
+            <Button variant="text">Создать тред</Button>
+          </>
+        )}
+      </List>
+    </Box>
   );
 };
 

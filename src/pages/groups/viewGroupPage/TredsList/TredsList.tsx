@@ -2,10 +2,10 @@ import React from "react";
 import { Button, List, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import TredItem from "./TredItem";
-import { ITred } from "../../../../interfaces/entities";
+import { ITred, ITredItem } from "../../../../interfaces/entities";
 
 interface IProps {
-  treds: ITred[];
+  treds: ITredItem[];
   groupId: number;
 }
 
@@ -15,17 +15,19 @@ const TredsList: React.FC<IProps> = ({ treds, groupId }) => {
   const handleClick = (id: number) => {
     navigate(`/groups/${groupId}/treds/${id}`);
   };
+  const handleCreateTred = () => {
+    navigate(`/groups/${groupId}/treds/create`);
+  };
 
   return (
     <List sx={{ overflowY: "scroll", height: "600px", width: "100%" }}>
       {treds.length > 0 ? (
-        treds.map((tred: ITred) => (
+        treds.map((tred) => (
           <TredItem tred={tred} onClick={() => handleClick(tred.id)} />
         ))
       ) : (
         <>
           <Typography>В этой группе пока нет тредов</Typography>
-          <Button variant="text">Создать тред</Button>
         </>
       )}
     </List>

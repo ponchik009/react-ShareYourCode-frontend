@@ -1,9 +1,9 @@
 import React from "react";
 import { ListItemButton, Typography, Divider } from "@mui/material";
-import { ITred } from "../../../../interfaces/entities";
+import { ITred, ITredItem } from "../../../../interfaces/entities";
 
 interface IProps {
-  tred: ITred;
+  tred: ITredItem;
   onClick: () => void;
 }
 

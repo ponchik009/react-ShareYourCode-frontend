@@ -1,7 +1,13 @@
+import { Typography } from "@mui/material";
 import React from "react";
+import { IUserItem } from "../../../../interfaces/entities";
 
-const UserSimpleItem = () => {
-  return <div>UserSimpleItem</div>;
+interface IUserSimpleProps {
+  user: IUserItem;
+}
+
+const UserSimpleItem: React.FC<IUserSimpleProps> = ({ user }) => {
+  return <Typography>{user.name}</Typography>;
 };
 
 export default UserSimpleItem;

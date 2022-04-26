@@ -2,11 +2,11 @@ import React from "react";
 import { Typography, Divider, ListItem } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import GradeIcon from "@mui/icons-material/Grade";
-import { IUser } from "../../../../interfaces/entities";
+import { IUserItem } from "../../../../interfaces/entities";
 import StyledIconButton from "../../../../components/UI/StyledIconButton";
 
 interface IProps {
-  user: IUser;
+  user: IUserItem;
   onDelegateAdmin: () => void;
   onKickOut: () => void;
 }

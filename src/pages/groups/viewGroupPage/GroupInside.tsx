@@ -2,6 +2,8 @@ import React from "react";
 import { Typography, Box, Container, Button } from "@mui/material";
 import InviteDialog from "../../../components/InviteDialog/InviteDialog";
 import { IGroup } from "../../../interfaces/entities";
+import TredsList from "./TredsList/TredsList";
+import UsersList from "./UsersList/UsersList";
 
 interface IGroupInfoProps {
   handleCreateTred: () => void;
@@ -25,11 +27,11 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
 
   return (
     <>
-      <Typography>{`Group with ID = ${group.id}\n${group.name}`}</Typography>
+      <Typography>{group.name}</Typography>
       <Box sx={{ display: "flex", marginTop: "20px" }}>
         <Container sx={{ width: "1500px" }}>
-          {/* <TredsList treds={group.treds} groupId={+groupId!} /> */}
-          <Button onClick={handleCreateTred}>Создать тред</Button>
+          <TredsList treds={group.treds} groupId={group.id} />
+          {isAdmin && <Button onClick={handleCreateTred}>Создать тред</Button>}
         </Container>
         <Container
           sx={{
@@ -39,10 +41,16 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
             alignItems: "end",
           }}
         >
-          {/* <UsersList members={group.members} groupId={+groupId!} /> */}
-          <Button onClick={handleInviteDialogOpen}>
-            Приласить в сообщество
-          </Button>
+          <UsersList
+            members={group.members}
+            groupId={group.id}
+            isAdmin={isAdmin}
+          />
+          {isAdmin && (
+            <Button onClick={handleInviteDialogOpen}>
+              Приласить в сообщество
+            </Button>
+          )}
         </Container>
       </Box>
       <InviteDialog
