@@ -4,6 +4,7 @@ import Tab from "@mui/material/Tab";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import GroupsList from "./GroupsList/GroupsList";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import "../../Page.scss";
 import { IGroupItem } from "../../../interfaces/entities";
@@ -13,22 +14,21 @@ import { api } from "../../../api";
 const GroupsPage = () => {
   const [tab, setTab] = React.useState<GroupTypes>(GroupTypes.PUBLIC);
   const [groups, setGroups] = React.useState<IGroupItem[]>([]);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: any) => {
     setTab(newValue);
   };
 
-  // React.useEffect(() => {
-  //   /*
-  //     запрос на группы
-  //   */
-  // }, []);
-
   React.useEffect(() => {
     /*
       запрос на группы
     */
-    api.group.getGroups(tab).then((groups) => setGroups(groups));
+    setIsLoading(true);
+    api.group.getGroups(tab).then((groups) => {
+      setGroups(groups);
+      setIsLoading(false);
+    });
   }, [tab]);
 
   return (
@@ -44,11 +44,15 @@ const GroupsPage = () => {
           <Tab label="Мои сообщества" value={GroupTypes.MY} />
         </Tabs>
       </Box>
-      <Container
-        sx={{ overflowY: "scroll", height: "600px", marginTop: "20px" }}
-      >
-        <GroupsList groups={groups} />
-      </Container>
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        <Container
+          sx={{ overflowY: "scroll", height: "600px", marginTop: "20px" }}
+        >
+          <GroupsList groups={groups} />
+        </Container>
+      )}
     </div>
   );
 };
