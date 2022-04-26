@@ -1,4 +1,4 @@
-import { IGroupItem } from "../interfaces/entities";
+import { IGroup, IGroupItem } from "../interfaces/entities";
 import axios from "./instance";
 
 const create = async (name: string, description: string, isOpen: boolean) => {
@@ -24,6 +24,15 @@ const getGroups = async (groupType: GroupTypes) => {
   }
 };
 
+const getGroup = async (id: number) => {
+  try {
+    const response = await axios.get<IGroup>(`/group/${id}`);
+    return response.data;
+  } catch (err: any) {
+    return err.response.data.message;
+  }
+};
+
 export enum GroupTypes {
   PUBLIC = "public",
   MY = "my",
@@ -36,9 +45,11 @@ export interface IGroupApi {
     isOpen: boolean
   ) => Promise<undefined | number>;
   getGroups: (groupType: GroupTypes) => Promise<IGroupItem[]>;
+  getGroup: (id: number) => Promise<IGroup | string>;
 }
 
 export const group: IGroupApi = {
   create,
   getGroups,
+  getGroup,
 };

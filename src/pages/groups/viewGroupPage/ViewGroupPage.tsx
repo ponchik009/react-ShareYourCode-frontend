@@ -1,16 +1,26 @@
 import React from "react";
-import { Typography, Box, Container, Button } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Container,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import TredsList from "./TredsList/TredsList";
 import UsersList from "./UsersList/UsersList";
-import { IGroupItem } from "../../../interfaces/entities";
+import { IGroup } from "../../../interfaces/entities";
 import InviteDialog from "../../../components/InviteDialog/InviteDialog";
+import { api } from "../../../api";
 
 const ViewGroupPage = () => {
   const { groupId } = useParams();
-  const [group, setGroup] = React.useState<IGroupItem | null>(null);
+  const [group, setGroup] = React.useState<IGroup | null>(null);
   const [isInviteDialogOpen, setIsInviteDialogOpen] = React.useState(false);
   const navigate = useNavigate();
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
 
   const handleCreateTred = () => {
     navigate(`/groups/${groupId}/treds/create`);
@@ -19,18 +29,29 @@ const ViewGroupPage = () => {
   const handleInviteDialogOpen = () => {
     setIsInviteDialogOpen(true);
   };
-
   const handleInviteDialogClose = () => {
     setIsInviteDialogOpen(false);
   };
 
   React.useEffect(() => {
     // запрос на получение группы
+    setIsLoading(true);
+    api.group.getGroup(+groupId!).then((data) => {
+      if (typeof data === "string") {
+        setError(data);
+      } else {
+        setGroup(data);
+        setError("");
+      }
+      setIsLoading(false);
+    });
   }, []);
 
   return (
     <div className="page">
-      {group && (
+      {isLoading ? (
+        <CircularProgress />
+      ) : group ? (
         <>
           <Typography>{`Group with ID = ${groupId}\n${group.name}`}</Typography>
           <Box sx={{ display: "flex", marginTop: "20px" }}>
@@ -58,6 +79,8 @@ const ViewGroupPage = () => {
             id={group.id}
           />
         </>
+      ) : (
+        <Typography>{error}</Typography>
       )}
     </div>
   );
