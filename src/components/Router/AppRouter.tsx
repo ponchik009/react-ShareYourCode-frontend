@@ -13,7 +13,7 @@ import Unauthorized from "../../pages/unauthorized/Unauthorized";
 import ProtectedRoute from "./ProtectedRoute";
 
 interface IRouterProps {
-  isAuth: boolean;
+  isAuth: boolean | null;
 }
 
 const AppRouter: React.FC<IRouterProps> = ({ isAuth }) => {

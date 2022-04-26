@@ -6,7 +6,7 @@ export interface IUser {
 
 export interface AuthState {
   user: IUser | null;
-  isAuth: boolean;
+  isAuth: boolean | null;
 }
 
 export enum AuthActionTypes {

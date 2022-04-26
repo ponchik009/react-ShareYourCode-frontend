@@ -2,7 +2,7 @@ import { AuthActions, AuthActionTypes, AuthState } from "../../interfaces/auth";
 
 const initialState: AuthState = {
   user: null,
-  isAuth: false,
+  isAuth: null,
 };
 
 export const authReducer = (

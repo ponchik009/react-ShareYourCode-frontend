@@ -19,8 +19,11 @@ import UserBox from "./UserBox";
 
 import { api } from "../api/index";
 
+import { Backdrop } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
+
 interface ILayoutProps {
-  isAuth: boolean;
+  isAuth: boolean | null;
 }
 
 const MainLayout: React.FC<ILayoutProps> = ({ children, isAuth }) => {
@@ -79,6 +82,17 @@ const MainLayout: React.FC<ILayoutProps> = ({ children, isAuth }) => {
   React.useEffect(() => {
     getUser()(dispatch);
   }, []);
+
+  if (isAuth === null) {
+    return (
+      <Backdrop
+        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
+    );
+  }
 
   return (
     <div
