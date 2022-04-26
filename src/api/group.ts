@@ -33,6 +33,15 @@ const getGroup = async (id: number) => {
   }
 };
 
+const enter = async (id: number) => {
+  try {
+    const response = await axios.patch<IGroup>(`/group/enter/${id}`);
+    return response.data;
+  } catch (err: any) {
+    return err.response.data.message;
+  }
+};
+
 export enum GroupTypes {
   PUBLIC = "public",
   MY = "my",
@@ -46,10 +55,12 @@ export interface IGroupApi {
   ) => Promise<undefined | number>;
   getGroups: (groupType: GroupTypes) => Promise<IGroupItem[]>;
   getGroup: (id: number) => Promise<IGroup | string>;
+  enter: (id: number) => Promise<IGroup | string>;
 }
 
 export const group: IGroupApi = {
   create,
   getGroups,
   getGroup,
+  enter,
 };

@@ -1,23 +1,18 @@
 import React from "react";
-import {
-  Typography,
-  Box,
-  Container,
-  Button,
-  CircularProgress,
-} from "@mui/material";
+import { Typography, CircularProgress } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import TredsList from "./TredsList/TredsList";
-import UsersList from "./UsersList/UsersList";
 import { IGroup } from "../../../interfaces/entities";
-import InviteDialog from "../../../components/InviteDialog/InviteDialog";
 import { api } from "../../../api";
+import { useAppSelector } from "../../../hooks/hooks";
+import GroupInside from "./GroupInside";
+import GroupPromo from "./GroupPromo";
 
 const ViewGroupPage = () => {
   const { groupId } = useParams();
   const [group, setGroup] = React.useState<IGroup | null>(null);
-  const [isInviteDialogOpen, setIsInviteDialogOpen] = React.useState(false);
   const navigate = useNavigate();
+
+  const { user } = useAppSelector((state) => state.auth);
 
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
@@ -26,11 +21,18 @@ const ViewGroupPage = () => {
     navigate(`/groups/${groupId}/treds/create`);
   };
 
-  const handleInviteDialogOpen = () => {
-    setIsInviteDialogOpen(true);
-  };
-  const handleInviteDialogClose = () => {
-    setIsInviteDialogOpen(false);
+  const handleEnter = () => {
+    setIsLoading(true);
+    api.group.enter(+groupId!).then((data) => {
+      if (typeof data === "string") {
+        setError(data);
+        setGroup(null);
+      } else {
+        setGroup(data);
+        setError("");
+      }
+      setIsLoading(false);
+    });
   };
 
   React.useEffect(() => {
@@ -39,6 +41,7 @@ const ViewGroupPage = () => {
     api.group.getGroup(+groupId!).then((data) => {
       if (typeof data === "string") {
         setError(data);
+        setGroup(null);
       } else {
         setGroup(data);
         setError("");
@@ -52,33 +55,15 @@ const ViewGroupPage = () => {
       {isLoading ? (
         <CircularProgress />
       ) : group ? (
-        <>
-          <Typography>{`Group with ID = ${groupId}\n${group.name}`}</Typography>
-          <Box sx={{ display: "flex", marginTop: "20px" }}>
-            <Container sx={{ width: "1500px" }}>
-              {/* <TredsList treds={group.treds} groupId={+groupId!} /> */}
-              <Button onClick={handleCreateTred}>Создать тред</Button>
-            </Container>
-            <Container
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "flex-end",
-                alignItems: "end",
-              }}
-            >
-              {/* <UsersList members={group.members} groupId={+groupId!} /> */}
-              <Button onClick={handleInviteDialogOpen}>
-                Приласить в сообщество
-              </Button>
-            </Container>
-          </Box>
-          <InviteDialog
-            isOpen={isInviteDialogOpen}
-            onClose={handleInviteDialogClose}
-            id={group.id}
+        group.members.some((member) => member.id === user?.id) ? (
+          <GroupInside
+            isAdmin={group.admin.id === user?.id}
+            handleCreateTred={handleCreateTred}
+            group={group}
           />
-        </>
+        ) : (
+          <GroupPromo group={group} handleEnter={handleEnter} />
+        )
       ) : (
         <Typography>{error}</Typography>
       )}
