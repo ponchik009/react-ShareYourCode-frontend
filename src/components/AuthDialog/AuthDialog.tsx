@@ -8,9 +8,20 @@ interface IProps {
   onClose: () => void;
   isLogin: boolean;
   signIn: (email: string, password: string) => Promise<string | undefined>;
+  signUp: (
+    email: string,
+    password: string,
+    name: string
+  ) => Promise<string | undefined>;
 }
 
-const AuthDialog: React.FC<IProps> = ({ isOpen, onClose, isLogin, signIn }) => {
+const AuthDialog: React.FC<IProps> = ({
+  isOpen,
+  onClose,
+  isLogin,
+  signIn,
+  signUp,
+}) => {
   const [tab, setTab] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -39,7 +50,7 @@ const AuthDialog: React.FC<IProps> = ({ isOpen, onClose, isLogin, signIn }) => {
       {tab === 0 ? (
         <LoginForm signIn={signIn} onClose={onClose} />
       ) : (
-        <RegisterForm />
+        <RegisterForm signUp={signUp} onClose={onClose} />
       )}
     </Dialog>
   );

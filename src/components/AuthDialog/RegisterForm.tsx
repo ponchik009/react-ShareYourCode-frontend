@@ -1,7 +1,22 @@
 import React from "react";
-import { Button, DialogActions, DialogContent, TextField } from "@mui/material";
+import {
+  Button,
+  DialogActions,
+  DialogContent,
+  TextField,
+  Typography,
+} from "@mui/material";
 
-const RegisterForm = () => {
+interface IRegisterProps {
+  signUp: (
+    email: string,
+    password: string,
+    name: string
+  ) => Promise<string | undefined>;
+  onClose: () => void;
+}
+
+const RegisterForm: React.FC<IRegisterProps> = ({ signUp, onClose }) => {
   const [email, setEmail] = React.useState("");
   const [name, setName] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -14,6 +29,8 @@ const RegisterForm = () => {
   const [emailErrorText, setEmailErrorText] = React.useState("");
   const [nameErrorText, setNameErrorText] = React.useState("");
   const [passwordErrorText, setPasswordErrorText] = React.useState("");
+
+  const [error, setError] = React.useState("");
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmailError(false);
@@ -88,14 +105,23 @@ const RegisterForm = () => {
     return check;
   };
 
-  const handleRegister = () => {
+  const handleRegister = async () => {
     if (!validate()) return;
+
     // запрос на регистрацию, изменение глобал стейта
+    const registerError = await signUp(email, password, name);
+    if (registerError) {
+      setError(registerError);
+    } else {
+      setError("");
+      onClose();
+    }
   };
 
   return (
     <>
       <DialogContent sx={{ padding: "20px" }}>
+        {error && <Typography>{error}</Typography>}
         <TextField
           label="Email"
           fullWidth

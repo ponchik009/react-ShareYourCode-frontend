@@ -17,6 +17,8 @@ import { useDispatch } from "react-redux";
 import { getUser, logIn, logOut } from "../store/action/auth";
 import UserBox from "./UserBox";
 
+import { api } from "../api/index";
+
 interface ILayoutProps {
   isAuth: boolean;
 }
@@ -60,6 +62,18 @@ const MainLayout: React.FC<ILayoutProps> = ({ children, isAuth }) => {
   };
   const signOut = () => {
     logOut()(dispatch);
+  };
+  const signUp = async (
+    email: string,
+    password: string,
+    name: string
+  ): Promise<string | undefined> => {
+    try {
+      await api.auth.register(email, password, name);
+      logIn(email, password)(dispatch).then((error) => error);
+    } catch (err) {
+      return "Ошибка авторизации! Возможно, ваша почта уже зарегистрирована!";
+    }
   };
 
   React.useEffect(() => {
@@ -116,6 +130,7 @@ const MainLayout: React.FC<ILayoutProps> = ({ children, isAuth }) => {
         onClose={handleDialogClose}
         isLogin={isLoginDialog}
         signIn={signIn}
+        signUp={signUp}
       />
       <div className="wrapper">{children}</div>
     </div>

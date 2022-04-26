@@ -1,6 +1,7 @@
 import { Box, Button, Switch, TextField, Typography } from "@mui/material";
 import React, { ChangeEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
+import { api } from "../../../api";
 
 import "../../Page.scss";
 
@@ -9,6 +10,8 @@ const CreateGroupPage = () => {
   const [description, setDescription] = React.useState("");
   const [isPublic, setIsPublic] = React.useState(false);
   const navigate = useNavigate();
+
+  const [error, setError] = React.useState("");
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -22,10 +25,15 @@ const CreateGroupPage = () => {
     setIsPublic(event.target.checked);
   };
 
-  const handleCreateClick = () => {
+  const handleCreateClick = async () => {
     // отправка запроса на создание
-    // редирект на страницу группы
-    navigate("/groups/1");
+    try {
+      const groupId = await api.group.create(name, description, isPublic);
+      // редирект на страницу группы
+      navigate(`/groups/${groupId}`);
+    } catch (err: any) {
+      console.log(err);
+    }
   };
 
   return (
@@ -34,6 +42,7 @@ const CreateGroupPage = () => {
       <Box
         sx={{ display: "flex", flexDirection: "column", alignItems: "start" }}
       >
+        {error && <Typography>{error}</Typography>}
         <TextField
           label="Название"
           fullWidth
