@@ -1,5 +1,6 @@
 import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
+import Unauthorized from "../../pages/unauthorized/Unauthorized";
 
 interface IRouteProps {
   isAuth: boolean | null;
@@ -12,7 +13,8 @@ const ProtectedRoute: React.FC<IRouteProps> = ({
   redirectPath,
 }) => {
   if (!isAuth) {
-    return <Navigate to={redirectPath} replace />;
+    // return <Navigate to={redirectPath} replace />;
+    return <Unauthorized />;
   }
 
   return <>{children ? children : <Outlet />}</>;
