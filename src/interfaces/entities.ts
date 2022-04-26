@@ -1,9 +1,8 @@
-export interface IGroup {
+export interface IGroupItem {
   id: number;
   name: string;
   description: string;
-  treds: ITred[];
-  members: IUser[];
+  membersCount: number;
 }
 
 export interface IUser {

@@ -6,29 +6,29 @@ import Box from "@mui/material/Box";
 import GroupsList from "./GroupsList/GroupsList";
 
 import "../../Page.scss";
-import { IGroup } from "../../../interfaces/entities";
+import { IGroupItem } from "../../../interfaces/entities";
+import { GroupTypes } from "../../../api/group";
+import { api } from "../../../api";
 
 const GroupsPage = () => {
-  const [tab, setTab] = React.useState(0);
-  const [groups, setGroups] = React.useState<IGroup[]>([]);
+  const [tab, setTab] = React.useState<GroupTypes>(GroupTypes.PUBLIC);
+  const [groups, setGroups] = React.useState<IGroupItem[]>([]);
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleChange = (event: React.SyntheticEvent, newValue: any) => {
     setTab(newValue);
   };
 
-  React.useEffect(() => {
-    /*
-      запрос на группы
-    */
-    setGroups(Array(20).fill({ name: `Group ${tab}` }));
-  }, []);
+  // React.useEffect(() => {
+  //   /*
+  //     запрос на группы
+  //   */
+  // }, []);
 
   React.useEffect(() => {
     /*
       запрос на группы
     */
-    setGroups(Array(20).fill({ name: `Group ${tab}` }));
-    // setGroups([]);
+    api.group.getGroups(tab).then((groups) => setGroups(groups));
   }, [tab]);
 
   return (
@@ -40,8 +40,8 @@ const GroupsPage = () => {
         }}
       >
         <Tabs value={tab} onChange={handleChange} aria-label="basic tabs">
-          <Tab label="Публичные сообщества" />
-          <Tab label="Мои сообщества" />
+          <Tab label="Публичные сообщества" value={GroupTypes.PUBLIC} />
+          <Tab label="Мои сообщества" value={GroupTypes.MY} />
         </Tabs>
       </Box>
       <Container

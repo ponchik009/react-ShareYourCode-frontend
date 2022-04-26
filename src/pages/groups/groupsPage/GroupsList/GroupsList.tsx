@@ -2,24 +2,28 @@ import React from "react";
 import { List, Typography } from "@mui/material";
 import GroupItem from "./GroupItem";
 import { useNavigate } from "react-router-dom";
-import { IGroup } from "../../../../interfaces/entities";
+import { IGroupItem } from "../../../../interfaces/entities";
 
 interface IProps {
-  groups: IGroup[];
+  groups: IGroupItem[];
 }
 
 const GroupsList: React.FC<IProps> = ({ groups }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(`/groups/${1}`);
+  const handleClick = (id: number) => {
+    navigate(`/groups/${id}`);
   };
 
   return (
     <List>
       {groups.length > 0 ? (
-        groups.map((group: IGroup) => (
-          <GroupItem group={group} onClick={handleClick} />
+        groups.map((group: IGroupItem) => (
+          <GroupItem
+            group={group}
+            onClick={() => handleClick(group.id)}
+            key={group.id}
+          />
         ))
       ) : (
         <Typography>Групп не найдено!</Typography>

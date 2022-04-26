@@ -3,12 +3,12 @@ import { Typography, Box, Container, Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import TredsList from "./TredsList/TredsList";
 import UsersList from "./UsersList/UsersList";
-import { IGroup } from "../../../interfaces/entities";
+import { IGroupItem } from "../../../interfaces/entities";
 import InviteDialog from "../../../components/InviteDialog/InviteDialog";
 
 const ViewGroupPage = () => {
   const { groupId } = useParams();
-  const [group, setGroup] = React.useState<IGroup | null>(null);
+  const [group, setGroup] = React.useState<IGroupItem | null>(null);
   const [isInviteDialogOpen, setIsInviteDialogOpen] = React.useState(false);
   const navigate = useNavigate();
 
@@ -26,16 +26,6 @@ const ViewGroupPage = () => {
 
   React.useEffect(() => {
     // запрос на получение группы
-    setGroup({
-      id: 1,
-      name: "Отряд сосистеров!!!",
-      description: "Крутая ваще группа!!",
-      treds: Array(20).fill({ id: 1, name: "Тред" }),
-      members: Array(20).fill({
-        id: 1,
-        name: "Пользователь",
-      }),
-    });
   }, []);
 
   return (
@@ -45,7 +35,7 @@ const ViewGroupPage = () => {
           <Typography>{`Group with ID = ${groupId}\n${group.name}`}</Typography>
           <Box sx={{ display: "flex", marginTop: "20px" }}>
             <Container sx={{ width: "1500px" }}>
-              <TredsList treds={group.treds} groupId={+groupId!} />
+              {/* <TredsList treds={group.treds} groupId={+groupId!} /> */}
               <Button onClick={handleCreateTred}>Создать тред</Button>
             </Container>
             <Container
@@ -56,7 +46,7 @@ const ViewGroupPage = () => {
                 alignItems: "end",
               }}
             >
-              <UsersList members={group.members} groupId={+groupId!} />
+              {/* <UsersList members={group.members} groupId={+groupId!} /> */}
               <Button onClick={handleInviteDialogOpen}>
                 Приласить в сообщество
               </Button>

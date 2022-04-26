@@ -1,10 +1,10 @@
 import { Divider, ListItemButton, Typography } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { IGroup } from "../../../../interfaces/entities";
+import { IGroupItem } from "../../../../interfaces/entities";
 
 interface IProps {
-  group: IGroup;
+  group: IGroupItem;
   onClick: () => void;
 }
 
