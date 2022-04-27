@@ -38,23 +38,16 @@ const UsersList: React.FC<IProps> = ({ members, isAdmin }) => {
     >
       <Typography>Участники сообщества</Typography>
       <List>
-        {members.length > 0 ? (
-          members.map((user) =>
-            isAdmin ? (
-              <UserItem
-                user={user}
-                onDelegateAdmin={() => handleDelegateAdmin(user.id)}
-                onKickOut={() => handleKickOut(user.id)}
-              />
-            ) : (
-              <UserSimpleItem user={user} />
-            )
+        {members.map((user) =>
+          isAdmin ? (
+            <UserItem
+              user={user}
+              onDelegateAdmin={() => handleDelegateAdmin(user.id)}
+              onKickOut={() => handleKickOut(user.id)}
+            />
+          ) : (
+            <UserSimpleItem user={user} />
           )
-        ) : (
-          <>
-            <Typography>В этой группе пока нет тредов</Typography>
-            <Button variant="text">Создать тред</Button>
-          </>
         )}
       </List>
     </Box>

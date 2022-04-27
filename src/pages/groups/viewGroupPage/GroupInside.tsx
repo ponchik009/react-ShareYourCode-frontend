@@ -56,7 +56,7 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
       <InviteDialog
         isOpen={isInviteDialogOpen}
         onClose={handleInviteDialogClose}
-        id={group.id}
+        group={group}
       />{" "}
     </>
   );

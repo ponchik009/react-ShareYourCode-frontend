@@ -7,16 +7,19 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import { IGroup } from "../../interfaces/entities";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
-  id: number;
+  group: IGroup;
 }
 
-const InviteDialog: React.FC<IProps> = ({ isOpen, onClose, id }) => {
+const InviteDialog: React.FC<IProps> = ({ isOpen, onClose, group }) => {
+  console.log(group);
+
   const [email, setEmail] = React.useState("");
-  const [link, setLink] = React.useState("");
+  const [link, setLink] = React.useState(group.inviteLink || "");
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);

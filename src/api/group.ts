@@ -29,7 +29,7 @@ const getGroup = async (id: number) => {
     const response = await axios.get<IGroup>(`/group/${id}`);
     return response.data;
   } catch (err: any) {
-    return err.response.data.message;
+    throw new Error(err.response.data.message);
   }
 };
 
@@ -38,7 +38,7 @@ const enter = async (id: number) => {
     const response = await axios.patch<IGroup>(`/group/enter/${id}`);
     return response.data;
   } catch (err: any) {
-    return err.response.data.message;
+    throw new Error(err.response.data.message);
   }
 };
 
@@ -54,8 +54,8 @@ export interface IGroupApi {
     isOpen: boolean
   ) => Promise<undefined | number>;
   getGroups: (groupType: GroupTypes) => Promise<IGroupItem[]>;
-  getGroup: (id: number) => Promise<IGroup | string>;
-  enter: (id: number) => Promise<IGroup | string>;
+  getGroup: (id: number) => Promise<IGroup>;
+  enter: (id: number) => Promise<IGroup>;
 }
 
 export const group: IGroupApi = {

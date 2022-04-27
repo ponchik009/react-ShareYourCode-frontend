@@ -23,31 +23,31 @@ const ViewGroupPage = () => {
 
   const handleEnter = () => {
     setIsLoading(true);
-    api.group.enter(+groupId!).then((data) => {
-      if (typeof data === "string") {
-        setError(data);
-        setGroup(null);
-      } else {
+    api.group
+      .enter(+groupId!)
+      .then((data) => {
         setGroup(data);
         setError("");
-      }
-      setIsLoading(false);
-    });
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   React.useEffect(() => {
     // запрос на получение группы
     setIsLoading(true);
-    api.group.getGroup(+groupId!).then((data) => {
-      if (typeof data === "string") {
-        setError(data);
-        setGroup(null);
-      } else {
+    api.group
+      .getGroup(+groupId!)
+      .then((data) => {
         setGroup(data);
         setError("");
-      }
-      setIsLoading(false);
-    });
+      })
+      .catch((err) => setError(err.message))
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
 
   return (
