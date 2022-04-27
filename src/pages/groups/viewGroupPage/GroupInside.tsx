@@ -9,20 +9,44 @@ interface IGroupInfoProps {
   handleCreateTred: () => void;
   isAdmin: boolean;
   group: IGroup;
+  handleInvite: (email: string) => Promise<string>;
+  handleGenerateLink: () => Promise<string>;
 }
 
 const GroupInside: React.FC<IGroupInfoProps> = ({
   handleCreateTred,
+  handleInvite,
   isAdmin,
   group,
+  handleGenerateLink,
 }) => {
   const [isInviteDialogOpen, setIsInviteDialogOpen] = React.useState(false);
+  const [inviteError, setInviteError] = React.useState("");
+  const [inviteLinkError, setInviteLinkError] = React.useState("");
 
   const handleInviteDialogOpen = () => {
     setIsInviteDialogOpen(true);
   };
   const handleInviteDialogClose = () => {
+    setInviteError("");
     setIsInviteDialogOpen(false);
+  };
+
+  const invite = (email: string) => {
+    handleInvite(email).then((error) => {
+      if (!error) {
+        handleInviteDialogClose();
+        setInviteError("");
+      } else {
+        setInviteError(error);
+      }
+    });
+  };
+
+  const generate = () => {
+    handleGenerateLink().then((error) => {
+      setInviteLinkError(error || "");
+    });
   };
 
   return (
@@ -56,7 +80,11 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
       <InviteDialog
         isOpen={isInviteDialogOpen}
         onClose={handleInviteDialogClose}
-        group={group}
+        invite={invite}
+        generate={generate}
+        inviteLink={group.inviteLink || ""}
+        inviteLinkError={inviteLinkError}
+        inviteError={inviteError}
       />{" "}
     </>
   );

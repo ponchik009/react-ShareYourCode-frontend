@@ -25,10 +25,14 @@ const GroupsPage = () => {
       запрос на группы
     */
     setIsLoading(true);
-    api.group.getGroups(tab).then((groups) => {
-      setGroups(groups);
-      setIsLoading(false);
-    });
+    api.group
+      .getGroups(tab)
+      .then((groups) => {
+        setGroups(groups);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [tab]);
 
   return (

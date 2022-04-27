@@ -1,4 +1,4 @@
-import { IGroup, IGroupItem } from "../interfaces/entities";
+import { IGroup, IGroupItem, IInviteLink } from "../interfaces/entities";
 import axios from "./instance";
 
 const create = async (name: string, description: string, isOpen: boolean) => {
@@ -42,6 +42,26 @@ const enter = async (id: number) => {
   }
 };
 
+const invite = async (id: number, email: string) => {
+  try {
+    const response = await axios.patch<IGroup>(`/group/invite/${id}`, {
+      email,
+    });
+    return response.data;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
+const generateLink = async (id: number) => {
+  try {
+    const response = await axios.patch<IInviteLink>(`/group/generate/${id}`);
+    return response.data;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
 export enum GroupTypes {
   PUBLIC = "public",
   MY = "my",
@@ -56,6 +76,8 @@ export interface IGroupApi {
   getGroups: (groupType: GroupTypes) => Promise<IGroupItem[]>;
   getGroup: (id: number) => Promise<IGroup>;
   enter: (id: number) => Promise<IGroup>;
+  invite: (id: number, email: string) => Promise<IGroup>;
+  generateLink: (id: number) => Promise<IInviteLink>;
 }
 
 export const group: IGroupApi = {
@@ -63,4 +85,6 @@ export const group: IGroupApi = {
   getGroups,
   getGroup,
   enter,
+  invite,
+  generateLink,
 };

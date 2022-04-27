@@ -7,19 +7,27 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import { IGroup } from "../../interfaces/entities";
 
 interface IProps {
   isOpen: boolean;
   onClose: () => void;
-  group: IGroup;
+  inviteError: string;
+  invite: (email: string) => void;
+  generate: () => void;
+  inviteLink: string;
+  inviteLinkError: string;
 }
 
-const InviteDialog: React.FC<IProps> = ({ isOpen, onClose, group }) => {
-  console.log(group);
-
+const InviteDialog: React.FC<IProps> = ({
+  isOpen,
+  onClose,
+  invite,
+  generate,
+  inviteLink,
+  inviteError,
+  inviteLinkError,
+}) => {
   const [email, setEmail] = React.useState("");
-  const [link, setLink] = React.useState(group.inviteLink || "");
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
@@ -27,9 +35,11 @@ const InviteDialog: React.FC<IProps> = ({ isOpen, onClose, group }) => {
 
   const handleInvite = () => {
     // берем email и отправляем инвайт
+    invite(email);
   };
   const handleGenerate = () => {
     // отправляем запрос на генерацию ссылки
+    generate();
   };
 
   return (
@@ -43,11 +53,20 @@ const InviteDialog: React.FC<IProps> = ({ isOpen, onClose, group }) => {
           label="Email"
           fullWidth
           value={email}
+          error={inviteError.length > 0}
+          helperText={inviteError}
           onChange={handleEmailChange}
         />
         <Button onClick={handleInvite}>Добавить</Button>
         <Typography>Генерация ссылки</Typography>
-        <TextField label="Link" fullWidth value={link} disabled />
+        <TextField
+          label="Link"
+          fullWidth
+          value={inviteLink}
+          disabled
+          error={inviteLinkError.length > 0}
+          helperText={inviteLinkError}
+        />
         <Button onClick={handleGenerate}>Сгенерировать</Button>
       </DialogContent>
     </Dialog>

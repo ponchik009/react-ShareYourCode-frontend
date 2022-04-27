@@ -44,9 +44,10 @@ const UsersList: React.FC<IProps> = ({ members, isAdmin }) => {
               user={user}
               onDelegateAdmin={() => handleDelegateAdmin(user.id)}
               onKickOut={() => handleKickOut(user.id)}
+              key={user.id}
             />
           ) : (
-            <UserSimpleItem user={user} />
+            <UserSimpleItem user={user} key={user.id} />
           )
         )}
       </List>

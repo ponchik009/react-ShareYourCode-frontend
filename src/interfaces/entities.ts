@@ -17,6 +17,11 @@ export interface IGroup {
   treds: ITredItem[];
 }
 
+export interface IInviteLink {
+  inviteLink: string;
+  inditeLinkEndDate: string;
+}
+
 export interface IUser {
   id: number;
   name: string;

@@ -35,6 +35,27 @@ const ViewGroupPage = () => {
       });
   };
 
+  const handleGenerateLink = () => {
+    const error: Promise<string> = api.group
+      .generateLink(group!.id)
+      .then((data) =>
+        setGroup({
+          ...group,
+          ...data,
+        } as IGroup)
+      )
+      .catch((err) => err.message);
+    return error;
+  };
+
+  const handleInvite = (email: string) => {
+    const error: Promise<string> = api.group
+      .invite(group!.id, email)
+      .then(setGroup)
+      .catch((err) => err.message);
+    return error;
+  };
+
   React.useEffect(() => {
     // запрос на получение группы
     setIsLoading(true);
@@ -60,6 +81,8 @@ const ViewGroupPage = () => {
             isAdmin={group.admin.id === user?.id}
             handleCreateTred={handleCreateTred}
             group={group}
+            handleInvite={handleInvite}
+            handleGenerateLink={handleGenerateLink}
           />
         ) : (
           <GroupPromo group={group} handleEnter={handleEnter} />

@@ -23,7 +23,11 @@ const TredsList: React.FC<IProps> = ({ treds, groupId }) => {
     <List sx={{ overflowY: "scroll", height: "600px", width: "100%" }}>
       {treds.length > 0 ? (
         treds.map((tred) => (
-          <TredItem tred={tred} onClick={() => handleClick(tred.id)} />
+          <TredItem
+            tred={tred}
+            onClick={() => handleClick(tred.id)}
+            key={tred.id}
+          />
         ))
       ) : (
         <>
