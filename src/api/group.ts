@@ -78,9 +78,10 @@ const enterFromLink = async (link: string) => {
 
 const leave = async (id: number) => {
   try {
-    const response = await axios.patch<IGroup>(`/group/leave/${id}`);
-    return response.data;
+    await axios.patch<void>(`/group/leave/${id}`);
   } catch (err: any) {
+    console.log(err);
+
     throw new Error(err.response.data.message);
   }
 };
@@ -120,7 +121,7 @@ export interface IGroupApi {
   invite: (id: number, email: string) => Promise<IGroup>;
   generateLink: (id: number) => Promise<IInviteLink>;
   enterFromLink: (link: string) => Promise<IGroup>;
-  leave: (id: number) => Promise<IGroup>;
+  leave: (id: number) => Promise<void>;
   kickOut: (id: number, user: IUserItem) => Promise<IGroup>;
   delegateAdmin: (id: number, user: IUserItem) => Promise<IGroup>;
 }

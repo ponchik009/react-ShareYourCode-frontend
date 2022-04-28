@@ -66,15 +66,13 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
   };
 
   const leave = () => {
-    handleLeave().then((error) => setError(error.length ? error : ""));
+    handleLeave().then((error) => setError(error || ""));
   };
   const kickOut = (user: IUserItem) => {
-    handleKickOut(user).then((error) => setError(error.length ? error : ""));
+    handleKickOut(user).then((error) => setError(error || ""));
   };
   const delegateAdmin = (user: IUserItem) => {
-    handleDelegateAdmin(user).then((error) =>
-      setError(error.length ? error : "")
-    );
+    handleDelegateAdmin(user).then((error) => setError(error || ""));
   };
 
   return (
@@ -107,6 +105,9 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
           )}
         </Container>
       </Box>
+      <Button color="error" onClick={leave}>
+        Выйти из сообщества
+      </Button>
       <InviteDialog
         isOpen={isInviteDialogOpen}
         onClose={handleInviteDialogClose}

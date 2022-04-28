@@ -59,7 +59,7 @@ const ViewGroupPage = () => {
   const handleLeave = () => {
     const error = api.group
       .leave(group!.id)
-      .then(setGroup)
+      .then(() => navigate("/groups"))
       .catch((err) => err.message);
     return error;
   };
