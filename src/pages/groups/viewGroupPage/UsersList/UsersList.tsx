@@ -1,22 +1,24 @@
 import React from "react";
 import { IUser, IUserItem } from "../../../../interfaces/entities";
-import { Box, Button, List, Typography } from "@mui/material";
+import { Box, Button, List, Typography, Divider } from "@mui/material";
 import UserItem from "./UserItem";
 import UserSimpleItem from "./UserSimpleItem";
 
 interface IProps {
   members: IUserItem[];
   groupId: number;
-  isAdmin: boolean;
+  user: IUser;
+  adminId: number;
   kickOut: (user: IUserItem) => void;
   delegateAdmin: (user: IUserItem) => void;
 }
 
 const UsersList: React.FC<IProps> = ({
   members,
-  isAdmin,
+  user,
   kickOut,
   delegateAdmin,
+  adminId,
 }) => {
   const handleDelegateAdmin = (user: IUserItem) => {
     const answer = window.confirm(
@@ -45,16 +47,27 @@ const UsersList: React.FC<IProps> = ({
     >
       <Typography>Участники сообщества</Typography>
       <List>
-        {members.map((user) =>
-          isAdmin ? (
+        {members.map((member) =>
+          user.id === member.id ? (
+            <>
+              <Typography key={user.id} sx={{ color: "green" }}>
+                {user.name + (adminId === user.id ? " (админ + я)" : " (я)")}
+              </Typography>
+              <Divider />
+            </>
+          ) : adminId === user.id ? (
             <UserItem
-              user={user}
-              onDelegateAdmin={() => handleDelegateAdmin(user)}
-              onKickOut={() => handleKickOut(user)}
-              key={user.id}
+              user={member}
+              onDelegateAdmin={() => handleDelegateAdmin(member)}
+              onKickOut={() => handleKickOut(member)}
+              key={member.id}
             />
           ) : (
-            <UserSimpleItem user={user} key={user.id} />
+            <UserSimpleItem
+              user={member}
+              key={member.id}
+              admin={adminId === member.id}
+            />
           )
         )}
       </List>

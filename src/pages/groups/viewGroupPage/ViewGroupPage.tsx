@@ -102,7 +102,7 @@ const ViewGroupPage = () => {
       ) : group ? (
         group.members.some((member) => member.id === user?.id) ? (
           <GroupInside
-            isAdmin={group.admin.id === user?.id}
+            user={user!}
             handleCreateTred={handleCreateTred}
             group={group}
             handleInvite={handleInvite}
