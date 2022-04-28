@@ -1,9 +1,17 @@
 import React from "react";
-import { Typography, Box, Container, Button } from "@mui/material";
+import {
+  Typography,
+  Box,
+  Container,
+  Button,
+  Alert,
+  Snackbar,
+} from "@mui/material";
 import InviteDialog from "../../../components/InviteDialog/InviteDialog";
-import { IGroup } from "../../../interfaces/entities";
+import { IGroup, IUserItem } from "../../../interfaces/entities";
 import TredsList from "./TredsList/TredsList";
 import UsersList from "./UsersList/UsersList";
+import Snack from "../../../components/Snack/Snack";
 
 interface IGroupInfoProps {
   handleCreateTred: () => void;
@@ -11,6 +19,9 @@ interface IGroupInfoProps {
   group: IGroup;
   handleInvite: (email: string) => Promise<string>;
   handleGenerateLink: () => Promise<string>;
+  handleLeave: () => Promise<string>;
+  handleKickOut: (user: IUserItem) => Promise<string>;
+  handleDelegateAdmin: (user: IUserItem) => Promise<string>;
 }
 
 const GroupInside: React.FC<IGroupInfoProps> = ({
@@ -19,10 +30,15 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
   isAdmin,
   group,
   handleGenerateLink,
+  handleLeave,
+  handleKickOut,
+  handleDelegateAdmin,
 }) => {
   const [isInviteDialogOpen, setIsInviteDialogOpen] = React.useState(false);
   const [inviteError, setInviteError] = React.useState("");
   const [inviteLinkError, setInviteLinkError] = React.useState("");
+
+  const [error, setError] = React.useState("");
 
   const handleInviteDialogOpen = () => {
     setIsInviteDialogOpen(true);
@@ -49,6 +65,18 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
     });
   };
 
+  const leave = () => {
+    handleLeave().then((error) => setError(error.length ? error : ""));
+  };
+  const kickOut = (user: IUserItem) => {
+    handleKickOut(user).then((error) => setError(error.length ? error : ""));
+  };
+  const delegateAdmin = (user: IUserItem) => {
+    handleDelegateAdmin(user).then((error) =>
+      setError(error.length ? error : "")
+    );
+  };
+
   return (
     <>
       <Typography>{group.name}</Typography>
@@ -69,6 +97,8 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
             members={group.members}
             groupId={group.id}
             isAdmin={isAdmin}
+            kickOut={kickOut}
+            delegateAdmin={delegateAdmin}
           />
           {isAdmin && (
             <Button onClick={handleInviteDialogOpen}>
@@ -86,6 +116,11 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
         inviteLinkError={inviteLinkError}
         inviteError={inviteError}
       />{" "}
+      <Snack
+        isOpen={error.length > 0}
+        onClose={() => setError("")}
+        text={error}
+      />
     </>
   );
 };

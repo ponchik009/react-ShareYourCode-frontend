@@ -8,21 +8,28 @@ interface IProps {
   members: IUserItem[];
   groupId: number;
   isAdmin: boolean;
+  kickOut: (user: IUserItem) => void;
+  delegateAdmin: (user: IUserItem) => void;
 }
 
-const UsersList: React.FC<IProps> = ({ members, isAdmin }) => {
-  const handleDelegateAdmin = (id: number) => {
+const UsersList: React.FC<IProps> = ({
+  members,
+  isAdmin,
+  kickOut,
+  delegateAdmin,
+}) => {
+  const handleDelegateAdmin = (user: IUserItem) => {
     const answer = window.confirm(
       "Вы точно хотите передать админские права этому челу?"
     );
     // типа передаем или нет
-    if (answer) alert(`delegate admin to user id ${id}`);
+    if (answer) delegateAdmin(user);
   };
 
-  const handleKickOut = (id: number) => {
+  const handleKickOut = (user: IUserItem) => {
     const answer = window.confirm("Вы точно хотите кикнуть этого чела?");
     // типа передаем или нет
-    if (answer) alert(`kick user id ${id}`);
+    if (answer) kickOut(user);
   };
 
   return (
@@ -42,8 +49,8 @@ const UsersList: React.FC<IProps> = ({ members, isAdmin }) => {
           isAdmin ? (
             <UserItem
               user={user}
-              onDelegateAdmin={() => handleDelegateAdmin(user.id)}
-              onKickOut={() => handleKickOut(user.id)}
+              onDelegateAdmin={() => handleDelegateAdmin(user)}
+              onKickOut={() => handleKickOut(user)}
               key={user.id}
             />
           ) : (

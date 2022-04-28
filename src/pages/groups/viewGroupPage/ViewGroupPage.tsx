@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, CircularProgress } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { IGroup } from "../../../interfaces/entities";
+import { IGroup, IUserItem } from "../../../interfaces/entities";
 import { api } from "../../../api";
 import { useAppSelector } from "../../../hooks/hooks";
 import GroupInside from "./GroupInside";
@@ -56,6 +56,30 @@ const ViewGroupPage = () => {
     return error;
   };
 
+  const handleLeave = () => {
+    const error = api.group
+      .leave(group!.id)
+      .then(setGroup)
+      .catch((err) => err.message);
+    return error;
+  };
+
+  const handleKickOut = (user: IUserItem) => {
+    const error = api.group
+      .kickOut(group!.id, user)
+      .then(setGroup)
+      .catch((err) => err.message);
+    return error;
+  };
+
+  const handleDelegateAdmin = (user: IUserItem) => {
+    const error = api.group
+      .delegateAdmin(group!.id, user)
+      .then(setGroup)
+      .catch((err) => err.message);
+    return error;
+  };
+
   React.useEffect(() => {
     // запрос на получение группы
     setIsLoading(true);
@@ -83,6 +107,9 @@ const ViewGroupPage = () => {
             group={group}
             handleInvite={handleInvite}
             handleGenerateLink={handleGenerateLink}
+            handleLeave={handleLeave}
+            handleKickOut={handleKickOut}
+            handleDelegateAdmin={handleDelegateAdmin}
           />
         ) : (
           <GroupPromo group={group} handleEnter={handleEnter} />

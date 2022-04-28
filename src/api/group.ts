@@ -1,4 +1,9 @@
-import { IGroup, IGroupItem, IInviteLink } from "../interfaces/entities";
+import {
+  IGroup,
+  IGroupItem,
+  IInviteLink,
+  IUserItem,
+} from "../interfaces/entities";
 import axios from "./instance";
 
 const create = async (name: string, description: string, isOpen: boolean) => {
@@ -71,6 +76,33 @@ const enterFromLink = async (link: string) => {
   }
 };
 
+const leave = async (id: number) => {
+  try {
+    const response = await axios.patch<IGroup>(`/group/leave/${id}`);
+    return response.data;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
+const kickOut = async (id: number, user: IUserItem) => {
+  try {
+    const response = await axios.patch<IGroup>(`/group/kick/${id}`, user);
+    return response.data;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
+const delegateAdmin = async (id: number, user: IUserItem) => {
+  try {
+    const response = await axios.patch<IGroup>(`/group/delegate/${id}`, user);
+    return response.data;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
 export enum GroupTypes {
   PUBLIC = "public",
   MY = "my",
@@ -88,6 +120,9 @@ export interface IGroupApi {
   invite: (id: number, email: string) => Promise<IGroup>;
   generateLink: (id: number) => Promise<IInviteLink>;
   enterFromLink: (link: string) => Promise<IGroup>;
+  leave: (id: number) => Promise<IGroup>;
+  kickOut: (id: number, user: IUserItem) => Promise<IGroup>;
+  delegateAdmin: (id: number, user: IUserItem) => Promise<IGroup>;
 }
 
 export const group: IGroupApi = {
@@ -98,4 +133,7 @@ export const group: IGroupApi = {
   invite,
   generateLink,
   enterFromLink,
+  leave,
+  kickOut,
+  delegateAdmin,
 };
