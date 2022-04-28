@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import AboutPage from "../../pages/about/AboutPage";
 import ErrorPage from "../../pages/error/ErrorPage";
 import CreateGroupPage from "../../pages/groups/createGroupPage/CreateGroupPage";
+import EnterGroupPage from "../../pages/groups/enterGroupPage/EnterGroupPage";
 import GroupsPage from "../../pages/groups/groupsPage/GroupsPage";
 import ViewGroupPage from "../../pages/groups/viewGroupPage/ViewGroupPage";
 import MainPage from "../../pages/main/MainPage";
@@ -45,6 +46,7 @@ const AppRouter: React.FC<IRouterProps> = ({ isAuth }) => {
           path="/groups/:groupId/treds/:tredId/packages/:packageId"
           element={<ViewPackagePage />}
         />
+        <Route path="/groups/enter/:inviteLink" element={<EnterGroupPage />} />
       </Route>
       <Route path="/about" element={<AboutPage />} />
       <Route path="/unauthorized" element={<Unauthorized />} />

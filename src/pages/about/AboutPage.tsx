@@ -1,17 +1,18 @@
+import { Typography } from "@mui/material";
 import React from "react";
 import "../Page.scss";
 
 const AboutPage = () => {
   return (
     <div className="custom-page">
-      <p>
+      <Typography>
         Данный проект - результат больной фантазии студента Иркутского
         политехнического института.
-      </p>
-      <p>
+      </Typography>
+      <Typography>
         Если вы хотите поддержать разработчика, то лучше не надо. Он не
         заслужил.
-      </p>
+      </Typography>
     </div>
   );
 };

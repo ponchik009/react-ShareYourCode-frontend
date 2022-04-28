@@ -62,6 +62,15 @@ const generateLink = async (id: number) => {
   }
 };
 
+const enterFromLink = async (link: string) => {
+  try {
+    const response = await axios.patch<IGroup>(`/group/fromLink/${link}`);
+    return response.data;
+  } catch (err: any) {
+    throw new Error(err.response.data.message);
+  }
+};
+
 export enum GroupTypes {
   PUBLIC = "public",
   MY = "my",
@@ -78,6 +87,7 @@ export interface IGroupApi {
   enter: (id: number) => Promise<IGroup>;
   invite: (id: number, email: string) => Promise<IGroup>;
   generateLink: (id: number) => Promise<IInviteLink>;
+  enterFromLink: (link: string) => Promise<IGroup>;
 }
 
 export const group: IGroupApi = {
@@ -87,4 +97,5 @@ export const group: IGroupApi = {
   enter,
   invite,
   generateLink,
+  enterFromLink,
 };

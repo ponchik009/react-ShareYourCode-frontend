@@ -62,10 +62,13 @@ const InviteDialog: React.FC<IProps> = ({
         <TextField
           label="Link"
           fullWidth
-          value={inviteLink}
-          disabled
+          multiline
+          value={
+            inviteLink ? `http://localhost:9000/groups/enter/${inviteLink}` : ""
+          }
           error={inviteLinkError.length > 0}
           helperText={inviteLinkError}
+          sx={{ cursor: "text" }}
         />
         <Button onClick={handleGenerate}>Сгенерировать</Button>
       </DialogContent>
