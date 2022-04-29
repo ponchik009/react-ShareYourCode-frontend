@@ -1,11 +1,11 @@
 import React from "react";
 import { Box, TextField, Typography, Button } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
-import { IPackageFull } from "../../../interfaces/entities";
+import { IPackage } from "../../../interfaces/entities";
 import CompileResultDialog from "../../../components/CompileResultDialog/CompileResultDialog";
 
 const ViewPackagePage = () => {
-  const [pack, setPack] = React.useState<IPackageFull>();
+  const [pack, setPack] = React.useState<IPackage>();
 
   const [review, setReview] = React.useState("");
 
@@ -40,28 +40,6 @@ const ViewPackagePage = () => {
 
   React.useEffect(() => {
     // загрузка посылки
-    setPack({
-      id: 1,
-      code: `import sys\nprint(sys.argv)`,
-      language: {
-        id: 1,
-        name: "python",
-      },
-      user: {
-        id: 1,
-        name: "ponchik009",
-        isPublic: true,
-      },
-      tred: {
-        id: 1,
-        name: "Tred 1",
-      },
-      comments: [],
-      review: "null",
-    });
-    if (pack?.review) {
-      setReview(pack.review);
-    }
   }, []);
 
   return (

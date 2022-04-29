@@ -11,7 +11,7 @@ const PackageItem: React.FC<IProps> = ({ pack, onClick }) => {
   return (
     <>
       <ListItemButton onClick={onClick}>
-        <Typography>{pack.name}</Typography>
+        <Typography>{pack.date}</Typography>
       </ListItemButton>
       <Divider />
     </>

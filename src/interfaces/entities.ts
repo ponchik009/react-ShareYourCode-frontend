@@ -33,9 +33,13 @@ export interface IUserItem {
   name: string;
 }
 
-export interface ITred {
-  id: number;
+export interface ITredCreate {
+  groupId: number;
   name: string;
+  description: string;
+  isPublic: boolean;
+  maxPackages: number;
+  closeDate: Date;
 }
 
 export interface ITredItem {
@@ -48,16 +52,23 @@ export interface ITredItem {
   closeDate: string;
 }
 
-export interface ITredFull {
+export interface ITred {
   id: number;
   name: string;
-  packages: IPackage[];
-  groupId: number;
+  description: string;
+  isPublic: boolean; // могут ли участники смотреть посылки других?
+  maxPackages: number;
+  isOpen: boolean; // можно ли отправлять посылки?
+  closeDate: string;
+  group: IGroupItem;
+  packages: IPackageItem[];
 }
 
-export interface IPackage {
+export interface IPackageItem {
   id: number;
-  name: string;
+  date: Date;
+  user: IUserItem;
+  language: ILanguage;
 }
 
 export interface ILanguage {
@@ -65,11 +76,12 @@ export interface ILanguage {
   name: string;
 }
 
-export interface IPackageFull {
+export interface IPackage {
   id: number;
   code: string;
+  date: Date;
   user: IUser;
-  tred: ITred;
+  tred: ITredItem;
   comments: string[];
   language: ILanguage;
   review: string | null;

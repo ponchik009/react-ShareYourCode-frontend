@@ -1,6 +1,16 @@
 import React from "react";
-import { Switch, Typography, Box, TextField, Button } from "@mui/material";
+import {
+  Switch,
+  Typography,
+  Box,
+  TextField,
+  Button,
+  CircularProgress,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
+import { api } from "../../../api";
+import { ITredCreate } from "../../../interfaces/entities";
+import Snack from "../../../components/Snack/Snack";
 
 const CreateTredPage = () => {
   const [name, setName] = React.useState("");
@@ -10,6 +20,9 @@ const CreateTredPage = () => {
     new Date(Date.now() + 1000 * 3600 * 24 * 3).toISOString().split("T")[0]
   );
   const [isPublic, setIsPublic] = React.useState(false);
+
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [error, setError] = React.useState("");
 
   const navigate = useNavigate();
   const { groupId } = useParams();
@@ -35,52 +48,89 @@ const CreateTredPage = () => {
   };
 
   const handleCreateClick = () => {
+    setIsLoading(true);
     // отправка запроса на создание треда
-    // редирект на страницу треда
-    navigate(`/groups/${groupId}/treds/1`);
+    const tred = {
+      name,
+      description,
+      closeDate: new Date(closeDate),
+      maxPackages,
+      isPublic,
+      groupId: +groupId!,
+    } as ITredCreate;
+    api.tred
+      .create(tred)
+      .then((tred) => navigate(`/groups/${groupId}/treds/${tred.id}`))
+      .catch((err) => setError(err.response.data.message))
+      .finally(() => setIsLoading(false));
   };
 
   return (
     <div className="page">
       <Typography>{`Создание треда в группе с id = ${groupId}`}</Typography>
-      <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "start" }}
-      >
-        <TextField
-          label="Название"
-          fullWidth
-          value={name}
-          onChange={handleNameChange}
-        />
-        <TextField
-          label="Описание"
-          rows={8}
-          multiline
-          fullWidth
-          value={description}
-          onChange={handleDescriptionChange}
-          sx={{ marginTop: "10px" }}
-        />
-        <TextField
-          label="Число пакетов"
-          type="number"
-          fullWidth
-          value={maxPackages}
-          onChange={handlePackagesChange}
-          sx={{ marginTop: "10px" }}
-        />
-        <Typography sx={{ marginTop: "10px" }}>Дата закрытия треда:</Typography>
-        <TextField type="date" value={closeDate} onChange={handleDateChange} />
-        <Box
-          sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}
-        >
-          <Typography sx={{ marginTop: "10px" }}>Публичный: </Typography>
-          <Switch value={isPublic} onChange={handleIsPublicChange} />
-        </Box>
-      </Box>
-      <Button variant="contained" onClick={handleCreateClick}>
-        Создать
-      </Button>
+      {isLoading ? (
+        <CircularProgress />
+      ) : (
+        <>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "start",
+            }}
+          >
+            <TextField
+              label="Название"
+              fullWidth
+              value={name}
+              onChange={handleNameChange}
+            />
+            <TextField
+              label="Описание"
+              rows={8}
+              multiline
+              fullWidth
+              value={description}
+              onChange={handleDescriptionChange}
+              sx={{ marginTop: "10px" }}
+            />
+            <TextField
+              label="Число пакетов"
+              type="number"
+              fullWidth
+              value={maxPackages}
+              onChange={handlePackagesChange}
+              sx={{ marginTop: "10px" }}
+            />
+            <Typography sx={{ marginTop: "10px" }}>
+              Дата закрытия треда:
+            </Typography>
+            <TextField
+              type="date"
+              value={closeDate}
+              onChange={handleDateChange}
+            />
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <Typography sx={{ marginTop: "10px" }}>Публичный: </Typography>
+              <Switch value={isPublic} onChange={handleIsPublicChange} />
+            </Box>
+          </Box>
+          <Button variant="contained" onClick={handleCreateClick}>
+            Создать
+          </Button>
+        </>
+      )}
+      <Snack
+        isOpen={error.length > 0}
+        onClose={() => setError("")}
+        text={error}
+      />
     </div>
   );
 };
