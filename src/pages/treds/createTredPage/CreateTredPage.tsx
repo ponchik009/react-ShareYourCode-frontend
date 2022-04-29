@@ -60,7 +60,7 @@ const CreateTredPage = () => {
     } as ITredCreate;
     api.tred
       .create(tred)
-      .then((tred) => navigate(`/groups/${groupId}/treds/${tred.id}`))
+      .then((tred) => navigate(`/groups/${groupId}`))
       .catch((err) => setError(err.response.data.message))
       .finally(() => setIsLoading(false));
   };

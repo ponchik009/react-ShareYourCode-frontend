@@ -5,6 +5,12 @@ export interface IGroupItem {
   membersCount: number;
 }
 
+export interface IGroupWithAdmin {
+  id: number;
+  name: string;
+  admin: IUserItem;
+}
+
 export interface IGroup {
   id: number;
   name: string;
@@ -60,7 +66,7 @@ export interface ITred {
   maxPackages: number;
   isOpen: boolean; // можно ли отправлять посылки?
   closeDate: string;
-  group: IGroupItem;
+  group: IGroupWithAdmin;
   packages: IPackageItem[];
 }
 

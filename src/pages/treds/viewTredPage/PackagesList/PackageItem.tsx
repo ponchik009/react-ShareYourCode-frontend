@@ -1,9 +1,9 @@
 import React from "react";
 import { ListItemButton, Typography, Divider } from "@mui/material";
-import { IPackage } from "../../../../interfaces/entities";
+import { IPackageItem } from "../../../../interfaces/entities";
 
 interface IProps {
-  pack: IPackage;
+  pack: IPackageItem;
   onClick: () => void;
 }
 
