@@ -64,7 +64,11 @@ const InviteDialog: React.FC<IProps> = ({
           fullWidth
           multiline
           value={
-            inviteLink ? `http://localhost:9000/groups/enter/${inviteLink}` : ""
+            inviteLink
+              ? `${
+                  process.env.REACT_APP_URL || "http://localhost:9000"
+                }/groups/enter/${inviteLink}`
+              : ""
           }
           error={inviteLinkError.length > 0}
           helperText={inviteLinkError}
