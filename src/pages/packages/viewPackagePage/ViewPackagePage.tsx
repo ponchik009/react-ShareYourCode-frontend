@@ -121,7 +121,7 @@ const ViewPackagePage = () => {
             sx={{ marginTop: "10px" }}
           />
           <Button onClick={handleCompile}>Скомпилировать</Button>
-          {isAdmin && (
+          {isAdmin ? (
             <>
               <TextField
                 label="Ваш отзыв"
@@ -135,6 +135,17 @@ const ViewPackagePage = () => {
               />
               <Button onClick={handleReview}>Сохранить</Button>
             </>
+          ) : (
+            user?.id === pack.user.id && (
+              <TextField
+                label="Отзыв администратора"
+                fullWidth
+                multiline
+                value={review}
+                disabled
+                sx={{ marginTop: "10px" }}
+              />
+            )
           )}
 
           <CompileResultDialog
