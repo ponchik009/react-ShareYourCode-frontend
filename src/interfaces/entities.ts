@@ -103,3 +103,9 @@ export interface IComment {
   id: number;
   text: string;
 }
+
+export interface IExecuteOutput {
+  out: string;
+  out_err: string;
+  out_meta: any;
+}

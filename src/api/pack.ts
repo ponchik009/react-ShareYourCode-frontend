@@ -1,4 +1,9 @@
-import { IPackage, IPackageCreate } from "../interfaces/entities";
+import {
+  IExecuteOutput,
+  ILanguage,
+  IPackage,
+  IPackageCreate,
+} from "../interfaces/entities";
 import axios from "./instance";
 
 const create = async (pack: IPackageCreate) => {
@@ -22,14 +27,38 @@ const review = async (id: number, review: string) => {
     .then((pack) => pack);
 };
 
+const execute = async (
+  code: string,
+  input: string = "",
+  cmd_input: string = "",
+  language: ILanguage
+) => {
+  return axios
+    .post<IExecuteOutput>(`/package/execute`, {
+      code,
+      input,
+      cmd_input,
+      language,
+    })
+    .then((response) => response.data)
+    .then((info) => info);
+};
+
 export interface IPackageApi {
   create: (pack: IPackageCreate) => Promise<IPackage>;
   get: (id: number) => Promise<IPackage>;
   review: (id: number, review: string) => Promise<IPackage>;
+  execute: (
+    code: string,
+    input: string,
+    cmd_input: string,
+    language: ILanguage
+  ) => Promise<IExecuteOutput>;
 }
 
 export const pack: IPackageApi = {
   create,
   get,
   review,
+  execute,
 };

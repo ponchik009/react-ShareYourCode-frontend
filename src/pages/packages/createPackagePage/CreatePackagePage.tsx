@@ -40,9 +40,16 @@ const CreatePackagePage = () => {
   const handleCompile = () => {
     // отправляем код на компиляцию
     // записываем результаты и открываем окно
-    handleDialogOpen();
-    setStdout("очень хороший результат");
-    setStderr("упс... ошибочки\nerr1\nerr2");
+    setIsLoading(true);
+    api.pack
+      .execute(code, stdin, cmdInput, languages[+languageIndex])
+      .then(({ out, out_err }) => {
+        setStdout(out);
+        setStderr(out_err);
+        handleDialogOpen();
+      })
+      .catch((err) => setError(err.response.data.message))
+      .finally(() => setIsLoading(false));
   };
 
   const { groupId, tredId } = useParams();
@@ -85,93 +92,95 @@ const CreatePackagePage = () => {
   }, []);
 
   return (
-    <div className="page">
-      {isLoading ? (
-        <CircularProgress />
-      ) : (
-        <>
-          <Typography>{`Создание посылки в треде id = ${tredId}`}</Typography>
-          <Box sx={{ overflowY: "scroll", height: "700px" }}>
-            <Box
-              sx={{
-                overflowY: "scroll",
-                height: "500px",
-                border: "1px solid red",
-              }}
-            >
-              <CodeEditor
-                value={code}
-                language="js"
-                placeholder="Ваш код здесь"
-                onChange={(evn: ChangeEvent<HTMLTextAreaElement>) =>
-                  setCode(evn.target.value)
-                }
-                padding={15}
-                style={{
-                  fontSize: 14,
-                  backgroundColor: "#f5f5f5",
-                  fontFamily:
-                    "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
-                  color: "#000",
+    <>
+      <div className="page">
+        {isLoading ? (
+          <CircularProgress />
+        ) : (
+          <>
+            <Typography>{`Создание посылки в треде id = ${tredId}`}</Typography>
+            <Box sx={{ overflowY: "scroll", height: "700px" }}>
+              <Box
+                sx={{
+                  overflowY: "scroll",
+                  height: "500px",
+                  border: "1px solid red",
                 }}
-              />
-            </Box>
-            <Box sx={{ padding: "20px" }}>
-              <FormControl fullWidth>
-                <InputLabel>Язык</InputLabel>
-                <Select
-                  value={languageIndex}
-                  label="Язык"
-                  onChange={handleLanguageChange}
-                >
-                  {languages.length &&
-                    languages.map((language, index) => (
-                      <MenuItem value={index} key={language.id}>
-                        {language.name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-              <TextField
-                label="Стандартный поток ввода"
-                fullWidth
-                multiline
-                value={stdin}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setStdin(event.target.value);
-                }}
-                sx={{ marginTop: "10px" }}
-              />
-              <TextField
-                label="Аргументы командной строки"
-                fullWidth
-                multiline
-                value={cmdInput}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setCmdInput(event.target.value);
-                }}
-                sx={{ marginTop: "10px" }}
-              />
-              <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-                <Button onClick={handleCompile}>Скомпилировать</Button>
-                <Button onClick={handleCreate}>Сохранить</Button>
+              >
+                <CodeEditor
+                  value={code}
+                  language="js"
+                  placeholder="Ваш код здесь"
+                  onChange={(evn: ChangeEvent<HTMLTextAreaElement>) =>
+                    setCode(evn.target.value)
+                  }
+                  padding={15}
+                  style={{
+                    fontSize: 14,
+                    backgroundColor: "#f5f5f5",
+                    fontFamily:
+                      "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+                    color: "#000",
+                  }}
+                />
+              </Box>
+              <Box sx={{ padding: "20px" }}>
+                <FormControl fullWidth>
+                  <InputLabel>Язык</InputLabel>
+                  <Select
+                    value={languageIndex}
+                    label="Язык"
+                    onChange={handleLanguageChange}
+                  >
+                    {languages.length &&
+                      languages.map((language, index) => (
+                        <MenuItem value={index} key={language.id}>
+                          {language.name}
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+                <TextField
+                  label="Стандартный поток ввода"
+                  fullWidth
+                  multiline
+                  value={stdin}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setStdin(event.target.value);
+                  }}
+                  sx={{ marginTop: "10px" }}
+                />
+                <TextField
+                  label="Аргументы командной строки"
+                  fullWidth
+                  multiline
+                  value={cmdInput}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setCmdInput(event.target.value);
+                  }}
+                  sx={{ marginTop: "10px" }}
+                />
+                <Box sx={{ display: "flex", justifyContent: "space-around" }}>
+                  <Button onClick={handleCompile}>Скомпилировать</Button>
+                  <Button onClick={handleCreate}>Сохранить</Button>
+                </Box>
               </Box>
             </Box>
-          </Box>
-          <CompileResultDialog
-            isOpen={isDialogResultOpen}
-            onClose={handleDialogClose}
-            stdout={stdout}
-            stderr={stderr}
-          />
-        </>
-      )}
+            <CompileResultDialog
+              isOpen={isDialogResultOpen}
+              onClose={handleDialogClose}
+              stdout={stdout}
+              stderr={stderr}
+            />
+          </>
+        )}
+      </div>
       <Snack
         isOpen={error.length > 0}
         onClose={() => setError("")}
         text={error}
       />
-    </div>
+    </>
   );
 };
 

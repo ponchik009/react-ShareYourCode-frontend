@@ -33,7 +33,6 @@ const ViewPackagePage = () => {
   const { user } = useAppSelector((state) => state.auth);
   const [isAdmin, setIsAdmin] = React.useState(false);
 
-  const navigate = useNavigate();
   const { groupId, packageId, tredId } = useParams();
 
   const handleDialogOpen = () => {
@@ -45,9 +44,16 @@ const ViewPackagePage = () => {
   const handleCompile = () => {
     // отправляем код на компиляцию
     // записываем результаты и открываем окно
-    handleDialogOpen();
-    setStdout("очень хороший результат");
-    setStderr("упс... ошибочки\nerr1\nerr2");
+    setIsLoading(true);
+    api.pack
+      .execute(pack!.code, stdin, cmdInput, pack!.language)
+      .then(({ out, out_err }) => {
+        setStdout(out);
+        setStderr(out_err);
+        handleDialogOpen();
+      })
+      .catch((err) => setMessage(err.response.data.message))
+      .finally(() => setIsLoading(false));
   };
   const handleReview = () => {
     setIsLoading(true);
@@ -80,94 +86,96 @@ const ViewPackagePage = () => {
   }, []);
 
   return (
-    <div className="page">
-      {isLoading ? (
-        <CircularProgress />
-      ) : pack ? (
-        <Box sx={{ overflowY: "scroll", height: "800px" }}>
-          <Typography>{`Посылка с id = ${pack.id} авторства ${pack.user.name}`}</Typography>
-          <TextField
-            disabled
-            value={pack.code}
-            multiline
-            fullWidth
-            label="Исходный код"
-          />
-          <TextField
-            disabled
-            value={pack.language.name}
-            fullWidth
-            label="Язык"
-            sx={{ marginTop: "10px" }}
-          />
-          <TextField
-            label="Стандартный поток ввода"
-            fullWidth
-            multiline
-            value={stdin}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setStdin(event.target.value);
-            }}
-            sx={{ marginTop: "10px" }}
-          />
-          <TextField
-            label="Аргументы командной строки"
-            fullWidth
-            multiline
-            value={cmdInput}
-            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-              setCmdInput(event.target.value);
-            }}
-            sx={{ marginTop: "10px" }}
-          />
-          <Button onClick={handleCompile}>Скомпилировать</Button>
-          {isAdmin ? (
-            <>
-              <TextField
-                label="Ваш отзыв"
-                fullWidth
-                multiline
-                value={review}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
-                  setReview(event.target.value);
-                }}
-                sx={{ marginTop: "10px" }}
-              />
-              <Button onClick={handleReview}>Сохранить</Button>
-            </>
-          ) : (
-            user?.id === pack.user.id && (
-              <TextField
-                label="Отзыв администратора"
-                fullWidth
-                multiline
-                value={review}
-                disabled
-                sx={{ marginTop: "10px" }}
-              />
-            )
-          )}
+    <>
+      <div className="page">
+        {isLoading ? (
+          <CircularProgress />
+        ) : pack ? (
+          <Box sx={{ overflowY: "scroll", height: "800px" }}>
+            <Typography>{`Посылка с id = ${pack.id} авторства ${pack.user.name}`}</Typography>
+            <TextField
+              disabled
+              value={pack.code}
+              multiline
+              fullWidth
+              label="Исходный код"
+            />
+            <TextField
+              disabled
+              value={pack.language.name}
+              fullWidth
+              label="Язык"
+              sx={{ marginTop: "10px" }}
+            />
+            <TextField
+              label="Стандартный поток ввода"
+              fullWidth
+              multiline
+              value={stdin}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setStdin(event.target.value);
+              }}
+              sx={{ marginTop: "10px" }}
+            />
+            <TextField
+              label="Аргументы командной строки"
+              fullWidth
+              multiline
+              value={cmdInput}
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                setCmdInput(event.target.value);
+              }}
+              sx={{ marginTop: "10px" }}
+            />
+            <Button onClick={handleCompile}>Скомпилировать</Button>
+            {isAdmin ? (
+              <>
+                <TextField
+                  label="Ваш отзыв"
+                  fullWidth
+                  multiline
+                  value={review}
+                  onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                    setReview(event.target.value);
+                  }}
+                  sx={{ marginTop: "10px" }}
+                />
+                <Button onClick={handleReview}>Сохранить</Button>
+              </>
+            ) : (
+              user?.id === pack.user.id && (
+                <TextField
+                  label="Отзыв администратора"
+                  fullWidth
+                  multiline
+                  value={review}
+                  disabled
+                  sx={{ marginTop: "10px" }}
+                />
+              )
+            )}
 
-          <CompileResultDialog
-            isOpen={isDialogResultOpen}
-            onClose={handleDialogClose}
-            stdout={stdout}
-            stderr={stderr}
-          />
-        </Box>
-      ) : (
-        <Typography>{error}</Typography>
-      )}
+            <CompileResultDialog
+              isOpen={isDialogResultOpen}
+              onClose={handleDialogClose}
+              stdout={stdout}
+              stderr={stderr}
+            />
+          </Box>
+        ) : (
+          <Typography>{error}</Typography>
+        )}
+      </div>
       <Snackbar open={message.length > 0} onClose={() => setMessage("")}>
         <Alert
-          severity="success"
+          severity="info"
           sx={{ width: "100%" }}
           onClose={() => setMessage("")}
         >
           {message}
         </Alert>
       </Snackbar>
-    </div>
+    </>
   );
 };
 
