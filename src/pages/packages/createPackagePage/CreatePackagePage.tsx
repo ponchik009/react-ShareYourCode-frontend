@@ -61,7 +61,8 @@ const CreatePackagePage = () => {
         // редиректим на страницу треда
         navigate(`/groups/${groupId}/treds/${tredId}`);
       })
-      .catch((err) => setError(err.response.data.message));
+      .catch((err) => setError(err.response.data.message))
+      .finally(() => setIsLoading(false));
   };
 
   const handleLanguageChange = (event: SelectChangeEvent) => {

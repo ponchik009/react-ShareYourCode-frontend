@@ -15,12 +15,21 @@ const get = async (id: number) => {
     .then((pack) => pack);
 };
 
+const review = async (id: number, review: string) => {
+  return axios
+    .patch<IPackage>(`/package/review`, { id, review })
+    .then((response) => response.data)
+    .then((pack) => pack);
+};
+
 export interface IPackageApi {
   create: (pack: IPackageCreate) => Promise<IPackage>;
   get: (id: number) => Promise<IPackage>;
+  review: (id: number, review: string) => Promise<IPackage>;
 }
 
 export const pack: IPackageApi = {
   create,
   get,
+  review,
 };
