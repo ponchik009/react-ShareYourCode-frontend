@@ -88,7 +88,18 @@ export interface IPackage {
   date: Date;
   user: IUser;
   tred: ITredItem;
-  comments: string[];
+  comments: IComment[];
   language: ILanguage;
   review: string | null;
+}
+
+export interface IPackageCreate {
+  code: string;
+  tredId: number;
+  language: ILanguage;
+}
+
+export interface IComment {
+  id: number;
+  text: string;
 }
