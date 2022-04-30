@@ -80,6 +80,7 @@ const CreatePackagePage = () => {
         name: "javascript",
       },
     ]);
+    setLanguageIndex("0");
   }, []);
 
   return (
