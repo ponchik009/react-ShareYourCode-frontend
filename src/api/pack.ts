@@ -44,6 +44,13 @@ const execute = async (
     .then((info) => info);
 };
 
+const getLanguages = async () => {
+  return axios
+    .get<ILanguage[]>(`/package/language`)
+    .then((response) => response.data)
+    .then((languages) => languages);
+};
+
 export interface IPackageApi {
   create: (pack: IPackageCreate) => Promise<IPackage>;
   get: (id: number) => Promise<IPackage>;
@@ -54,6 +61,7 @@ export interface IPackageApi {
     cmd_input: string,
     language: ILanguage
   ) => Promise<IExecuteOutput>;
+  getLanguages: () => Promise<ILanguage[]>;
 }
 
 export const pack: IPackageApi = {
@@ -61,4 +69,5 @@ export const pack: IPackageApi = {
   get,
   review,
   execute,
+  getLanguages,
 };

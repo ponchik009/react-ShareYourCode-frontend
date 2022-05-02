@@ -78,17 +78,15 @@ const CreatePackagePage = () => {
 
   React.useEffect(() => {
     // запрос, получаем доступные языки
-    setLanguages([
-      {
-        id: 1,
-        name: "python",
-      },
-      {
-        id: 2,
-        name: "javascript",
-      },
-    ]);
-    setLanguageIndex("0");
+    setIsLoading(true);
+    api.pack
+      .getLanguages()
+      .then((languages) => {
+        setLanguages(languages);
+        setLanguageIndex("0");
+      })
+      .catch((err) => setError(err.response.data.message))
+      .finally(() => setIsLoading(false));
   }, []);
 
   return (
