@@ -21,6 +21,7 @@ const CreatePackagePage = () => {
   const [code, setCode] = React.useState("");
   const [languageIndex, setLanguageIndex] = React.useState("");
   const [languages, setLanguages] = React.useState<Array<ILanguage>>([]);
+  const [languageType, setLanguageType] = React.useState("python");
   const [stdin, setStdin] = React.useState("");
   const [cmdInput, setCmdInput] = React.useState("");
 
@@ -74,6 +75,27 @@ const CreatePackagePage = () => {
 
   const handleLanguageChange = (event: SelectChangeEvent) => {
     setLanguageIndex(event.target.value);
+    switch (languages[+event.target.value].name) {
+      case "python": {
+        setLanguageType("python");
+        return;
+      }
+      case "javascript": {
+        setLanguageType("javascript");
+        return;
+      }
+      case "c-compile": {
+        setLanguageType("c");
+        return;
+      }
+      case "c++-compile": {
+        setLanguageType("cpp");
+        return;
+      }
+      default: {
+        return;
+      }
+    }
   };
 
   React.useEffect(() => {
@@ -100,14 +122,15 @@ const CreatePackagePage = () => {
             <Box sx={{ overflowY: "scroll", height: "700px" }}>
               <Box
                 sx={{
-                  overflowY: "scroll",
-                  height: "500px",
-                  border: "1px solid red",
+                  paddingLeft: "20px",
+                  overflow: "auto",
+                  minHeight: "30vh",
+                  maxHeight: "30vh",
                 }}
               >
                 <CodeEditor
                   value={code}
-                  language="js"
+                  language={languageType}
                   placeholder="Ваш код здесь"
                   onChange={(evn: ChangeEvent<HTMLTextAreaElement>) =>
                     setCode(evn.target.value)

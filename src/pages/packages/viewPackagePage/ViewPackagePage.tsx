@@ -8,6 +8,7 @@ import {
   Alert,
   CircularProgress,
 } from "@mui/material";
+import CodeEditor from "@uiw/react-textarea-code-editor";
 import { useNavigate, useParams } from "react-router-dom";
 import { IPackage } from "../../../interfaces/entities";
 import CompileResultDialog from "../../../components/CompileResultDialog/CompileResultDialog";
@@ -34,6 +35,8 @@ const ViewPackagePage = () => {
   const [isAdmin, setIsAdmin] = React.useState(false);
 
   const { groupId, packageId, tredId } = useParams();
+
+  const [languageType, setLanguageType] = React.useState("python");
 
   const handleDialogOpen = () => {
     setIsDialogResultOpen(true);
@@ -70,6 +73,31 @@ const ViewPackagePage = () => {
       .finally(() => setIsLoading(false));
   };
 
+  const handleLanguageTypeChange = () => {
+    switch (pack?.language.name) {
+      case "python": {
+        setLanguageType("python");
+        return;
+      }
+      case "javascript": {
+        setLanguageType("javascript");
+        return;
+      }
+      case "c-compile": {
+        setLanguageType("c");
+        return;
+      }
+      case "c++-compile": {
+        setLanguageType("cpp");
+        return;
+      }
+      default: {
+        setLanguageType("python");
+        return;
+      }
+    }
+  };
+
   React.useEffect(() => {
     // загрузка посылки
     setIsLoading(true);
@@ -80,6 +108,7 @@ const ViewPackagePage = () => {
       .then(([pack, tred]) => {
         setPack(pack);
         setIsAdmin(tred.group.admin.id === user?.id);
+        handleLanguageTypeChange();
       })
       .catch((err) => setError(err.response.data.message))
       .finally(() => setIsLoading(false));
@@ -93,13 +122,28 @@ const ViewPackagePage = () => {
         ) : pack ? (
           <Box sx={{ overflowY: "scroll", height: "800px" }}>
             <Typography>{`Посылка с id = ${pack.id} авторства ${pack.user.name}`}</Typography>
-            <TextField
-              disabled
-              value={pack.code}
-              multiline
-              fullWidth
-              label="Исходный код"
-            />
+            <Box
+              sx={{
+                paddingLeft: "20px",
+                overflow: "auto",
+                maxHeight: "30vh",
+              }}
+            >
+              <CodeEditor
+                value={pack.code}
+                language={languageType}
+                placeholder="Ваш код здесь"
+                padding={15}
+                style={{
+                  fontSize: 14,
+                  backgroundColor: "#f5f5f5",
+                  fontFamily:
+                    "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
+                  color: "#000",
+                }}
+                disabled
+              />
+            </Box>
             <TextField
               disabled
               value={pack.language.name}
