@@ -70,12 +70,13 @@ const MainLayout: React.FC<ILayoutProps> = ({ children, isAuth }) => {
     email: string,
     password: string,
     name: string
-  ): Promise<string | undefined> => {
+  ): Promise<void | any> => {
     try {
       await api.auth.register(email, password, name);
       logIn(email, password)(dispatch).then((error) => error);
-    } catch (err) {
-      return "Ошибка авторизации! Возможно, ваша почта уже зарегистрирована!";
+    } catch (err: any) {
+      console.log(err.message);
+      throw new Error(err.message);
     }
   };
 
@@ -106,6 +107,7 @@ const MainLayout: React.FC<ILayoutProps> = ({ children, isAuth }) => {
         sx={{
           marginLeft: "64px",
           position: "absolute",
+          zIndex: "1000",
           width: "56px",
           height: "56px",
           left: "53px",

@@ -23,21 +23,22 @@ const logOut = async () => {
 };
 
 const register = async (email: string, password: string, name: string) => {
-  return axios
-    .post<IUser>("/auth/register", {
+  try {
+    const response = await axios.post<IUser>("/auth/register", {
       email,
       password,
       name,
-    })
-    .then((response) => response.data)
-    .then((user) => user);
+    });
+  } catch (err: any) {
+    throw new Error(err.response.data.message.join("|"));
+  }
 };
 
 export interface IAuthApi {
   logIn: (email: string, password: string) => Promise<IUser>;
   getUser: () => Promise<IUser>;
   logOut: () => Promise<void>;
-  register: (email: string, password: string, name: string) => Promise<IUser>;
+  register: (email: string, password: string, name: string) => Promise<void>;
 }
 
 export const auth: IAuthApi = {

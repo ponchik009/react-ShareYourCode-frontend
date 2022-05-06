@@ -12,7 +12,7 @@ interface IProps {
     email: string,
     password: string,
     name: string
-  ) => Promise<string | undefined>;
+  ) => Promise<void | any>;
 }
 
 const AuthDialog: React.FC<IProps> = ({

@@ -12,7 +12,7 @@ interface IRegisterProps {
     email: string,
     password: string,
     name: string
-  ) => Promise<string | undefined>;
+  ) => Promise<void | any>;
   onClose: () => void;
 }
 
@@ -102,6 +102,10 @@ const RegisterForm: React.FC<IRegisterProps> = ({ signUp, onClose }) => {
       handlePasswordError("Пароли не совпадают!");
       check = false;
     }
+    if (password.length < 6) {
+      handlePasswordError("Пароль должен быть длиннее 6 символов!");
+      check = false;
+    }
     return check;
   };
 
@@ -109,13 +113,15 @@ const RegisterForm: React.FC<IRegisterProps> = ({ signUp, onClose }) => {
     if (!validate()) return;
 
     // запрос на регистрацию, изменение глобал стейта
-    const registerError = await signUp(email, password, name);
-    if (registerError) {
-      setError(registerError);
-    } else {
-      setError("");
-      onClose();
-    }
+    signUp(email, password, name)
+      .then(() => {
+        setError("");
+        onClose();
+      })
+      .catch((err) => {
+        console.log(err.message);
+        setError(err.message);
+      });
   };
 
   return (

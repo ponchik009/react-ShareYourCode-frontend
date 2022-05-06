@@ -9,10 +9,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background: url('../public/img/bg_2.svg') scroll no-repeat;
+  /* background: url('../public/img/bg_2.svg') scroll no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  /* background-position: center center; */
+  background-position: center center; */
+  background-color:aqua;
 
 }
 
