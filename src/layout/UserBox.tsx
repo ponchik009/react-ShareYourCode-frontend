@@ -10,7 +10,11 @@ const UserBox: React.FC<IUserBoxProps> = ({ signOut }) => {
   const { user } = useAppSelector((state) => state.auth);
   return (
     <Box className="userBox">
-      <img src="/img/user.svg" alt="иконка юзера" />
+      <img
+        src="/img/robot.svg"
+        alt="иконка юзера"
+        style={{ color: "#DCDCAA" }}
+      />
       <Box
         style={{
           display: "flex",
