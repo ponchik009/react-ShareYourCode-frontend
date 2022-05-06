@@ -10,17 +10,20 @@
   box-sizing: border-box;
   text-align: center;
 
-  padding: 7vh 5vw;
+  padding: 7vh 5vw 2vh 5vw;
   // border-radius: 50px 10px 50px 10px;
 
   // background: rgb(144,210,245);
   // background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(244,37,37,1) 50%, rgba(252,176,69,1) 100%);
 
   min-width: 50vw;
+  min-height: 50vh;
   // max-width: 90%;
 
 
-overflow-x: hidden;
+  overflow-x: hidden;
+  border: 1px solid black;
+
 }
 
 .custom-page {
