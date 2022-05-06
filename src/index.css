@@ -16,7 +16,7 @@ body {
   background-color: #a7a290;
 box-sizing: border-box;
 
-overflow-x: auto;
+overflow-x: hidden;
 
 }
 

@@ -90,15 +90,15 @@ const ViewGroupPage = () => {
           ...data,
           treds: [
             ...data.treds,
-            ...Array(20).fill({
-              id: 1,
-              name: "tred",
-              description: "123",
-              isOpen: true,
-              closeDate: "123",
-              isPublic: true,
-              maxPackages: 10,
-            }),
+            // ...Array(20).fill({
+            //   id: 1,
+            //   name: "tred",
+            //   description: "123",
+            //   isOpen: true,
+            //   closeDate: "123",
+            //   isPublic: true,
+            //   maxPackages: 10,
+            // }),
           ],
         });
         setError("");
