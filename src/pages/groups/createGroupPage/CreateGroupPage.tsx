@@ -40,7 +40,13 @@ const CreateGroupPage = () => {
     <div className="page">
       <Typography>Создание сообщества</Typography>
       <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "start" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "start",
+          minWidth: "50vw",
+          maxWidth: "80vw",
+        }}
       >
         {error && <Typography>{error}</Typography>}
         <TextField

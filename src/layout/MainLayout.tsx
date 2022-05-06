@@ -19,7 +19,7 @@ import UserBox from "./UserBox";
 
 import { api } from "../api/index";
 
-import { Backdrop } from "@mui/material";
+import { AppBar, Backdrop } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 
 interface ILayoutProps {
@@ -96,26 +96,19 @@ const MainLayout: React.FC<ILayoutProps> = ({ children, isAuth }) => {
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-      }}
-    >
-      <StyledIconButton
-        sx={{
-          marginLeft: "64px",
-          position: "absolute",
-          zIndex: "1000",
-          width: "56px",
-          height: "56px",
-          left: "53px",
-          top: "39px",
-        }}
-      >
-        <MenuIcon onClick={handleDrawerOpen} sx={{ fontSize: "56px" }} />
-      </StyledIconButton>
+    <>
+      <AppBar position="static" sx={{ backgroundColor: "#1E1E1E" }}>
+        <StyledIconButton
+          sx={{
+            marginLeft: "64px",
+            zIndex: "1000",
+            width: "56px",
+            height: "56px",
+          }}
+        >
+          <MenuIcon onClick={handleDrawerOpen} sx={{ fontSize: "56px" }} />
+        </StyledIconButton>
+      </AppBar>
       <StyledDrawer
         variant="persistent"
         anchor="left"
@@ -148,8 +141,9 @@ const MainLayout: React.FC<ILayoutProps> = ({ children, isAuth }) => {
         signIn={signIn}
         signUp={signUp}
       />
+
       <div className="wrapper">{children}</div>
-    </div>
+    </>
   );
 };
 

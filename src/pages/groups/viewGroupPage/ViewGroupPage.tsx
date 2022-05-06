@@ -86,7 +86,21 @@ const ViewGroupPage = () => {
     api.group
       .getGroup(+groupId!)
       .then((data) => {
-        setGroup(data);
+        setGroup({
+          ...data,
+          treds: [
+            ...data.treds,
+            ...Array(20).fill({
+              id: 1,
+              name: "tred",
+              description: "123",
+              isOpen: true,
+              closeDate: "123",
+              isPublic: true,
+              maxPackages: 10,
+            }),
+          ],
+        });
         setError("");
       })
       .catch((err) => setError(err.message))

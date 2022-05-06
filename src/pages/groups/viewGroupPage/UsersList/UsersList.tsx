@@ -37,15 +37,12 @@ const UsersList: React.FC<IProps> = ({
   return (
     <Box
       sx={{
-        overflowY: "scroll",
-        height: "600px",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
-        width: "100%",
       }}
     >
-      <Typography>Участники сообщества</Typography>
+      <Typography variant="h6">Участники сообщества</Typography>
       <List>
         {members.map((member) =>
           user.id === member.id ? (

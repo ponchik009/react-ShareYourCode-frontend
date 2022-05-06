@@ -44,18 +44,24 @@ const GroupsPage = () => {
         }}
       >
         <Tabs value={tab} onChange={handleChange} aria-label="basic tabs">
-          <Tab label="Публичные сообщества" value={GroupTypes.PUBLIC} />
-          <Tab label="Мои сообщества" value={GroupTypes.MY} />
+          <Tab
+            label="Публичные сообщества"
+            value={GroupTypes.PUBLIC}
+            style={{ fontSize: "4vh", minWidth: "20vw" }}
+          />
+          <Tab
+            label="Мои сообщества"
+            value={GroupTypes.MY}
+            style={{ fontSize: "4vh", minWidth: "20vw" }}
+          />
         </Tabs>
       </Box>
       {isLoading ? (
         <CircularProgress />
       ) : (
-        <Container
-          sx={{ overflowY: "scroll", height: "600px", marginTop: "20px" }}
-        >
+        <Box>
           <GroupsList groups={groups} />
-        </Container>
+        </Box>
       )}
     </div>
   );

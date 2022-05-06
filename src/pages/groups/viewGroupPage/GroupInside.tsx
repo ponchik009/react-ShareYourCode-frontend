@@ -77,20 +77,35 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
 
   return (
     <>
-      <Typography>{group.name}</Typography>
-      <Box sx={{ display: "flex", marginTop: "20px" }}>
-        <Container sx={{ width: "1500px" }}>
-          <TredsList treds={group.treds} groupId={group.id} />
-          {user.id === group.admin.id && (
-            <Button onClick={handleCreateTred}>Создать тред</Button>
-          )}
-        </Container>
-        <Container
+      <Box sx={{ display: "flex", marginTop: "20px", maxWidth: "80vw" }}>
+        <Box
           sx={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "flex-end",
-            alignItems: "end",
+            border: "1px solid black",
+            minWidth: "40vw",
+            maxWidth: "50vw",
+            overflowWrap: "break-word",
+          }}
+        >
+          <Typography variant="h6">{group.name}</Typography>
+          <Container>
+            <TredsList treds={group.treds} groupId={group.id} />
+            {user.id === group.admin.id && (
+              <Button onClick={handleCreateTred}>Создать тред</Button>
+            )}
+          </Container>
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            border: "1px solid black",
+            maxWidth: "30vw",
+            minWidth: "20vw",
+            overflowWrap: "break-word",
           }}
         >
           <UsersList
@@ -106,11 +121,19 @@ const GroupInside: React.FC<IGroupInfoProps> = ({
               Приласить в сообщество
             </Button>
           )}
-        </Container>
+        </Box>
       </Box>
-      <Button color="error" onClick={leave}>
-        Выйти из сообщества
-      </Button>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          border: "1px solid black",
+        }}
+      >
+        <Button color="error" onClick={leave}>
+          Выйти из сообщества
+        </Button>
+      </Box>
       <InviteDialog
         isOpen={isInviteDialogOpen}
         onClose={handleInviteDialogClose}

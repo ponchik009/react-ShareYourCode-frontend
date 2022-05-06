@@ -1,5 +1,5 @@
 import React from "react";
-import { Typography, Divider, ListItem } from "@mui/material";
+import { Typography, Divider, ListItem, Box } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import GradeIcon from "@mui/icons-material/Grade";
 import { IUserItem } from "../../../../interfaces/entities";
@@ -14,16 +14,22 @@ interface IProps {
 const UserItem: React.FC<IProps> = ({ user, onDelegateAdmin, onKickOut }) => {
   return (
     <>
-      <ListItem>
-        <Typography sx={{ overflowX: "hidden", width: "200px" }}>
-          {user.name}
-        </Typography>
-        <StyledIconButton onClick={onDelegateAdmin}>
-          <GradeIcon />
-        </StyledIconButton>
-        <StyledIconButton onClick={onKickOut}>
-          <CloseIcon />
-        </StyledIconButton>
+      <ListItem
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          flexWrap: "wrap",
+        }}
+      >
+        <Typography sx={{ overflowX: "hidden" }}>{user.name}</Typography>
+        <Box sx={{ display: "flex", flexDirection: "row" }}>
+          <StyledIconButton onClick={onDelegateAdmin}>
+            <GradeIcon />
+          </StyledIconButton>
+          <StyledIconButton onClick={onKickOut}>
+            <CloseIcon />
+          </StyledIconButton>
+        </Box>
       </ListItem>
       <Divider />
     </>
