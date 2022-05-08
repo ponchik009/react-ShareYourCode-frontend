@@ -30,6 +30,7 @@ const CreatePackagePage = () => {
   const [isDialogResultOpen, setIsDialogResultOpen] = React.useState(false);
 
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isExecuting, setIsExecuting] = React.useState(false);
   const [error, setError] = React.useState("");
 
   const handleDialogOpen = () => {
@@ -41,7 +42,7 @@ const CreatePackagePage = () => {
   const handleCompile = () => {
     // отправляем код на компиляцию
     // записываем результаты и открываем окно
-    setIsLoading(true);
+    setIsExecuting(true);
     api.pack
       .execute(code, stdin, cmdInput, languages[+languageIndex])
       .then(({ out, out_err }) => {
@@ -50,7 +51,7 @@ const CreatePackagePage = () => {
         handleDialogOpen();
       })
       .catch((err) => setError(err.response.data.message))
-      .finally(() => setIsLoading(false));
+      .finally(() => setIsExecuting(false));
   };
 
   const { groupId, tredId } = useParams();
@@ -161,6 +162,7 @@ const CreatePackagePage = () => {
                       ))}
                   </Select>
                 </FormControl>
+                <Typography variant="h6">Раздел компиляции</Typography>
                 <TextField
                   label="Стандартный поток ввода"
                   fullWidth
@@ -181,18 +183,37 @@ const CreatePackagePage = () => {
                   }}
                   sx={{ marginTop: "10px" }}
                 />
-                <Box sx={{ display: "flex", justifyContent: "space-around" }}>
-                  <Button onClick={handleCompile}>Скомпилировать</Button>
-                  <Button onClick={handleCreate}>Сохранить</Button>
-                </Box>
+                <Button onClick={handleCompile}>Скомпилировать</Button>
+                {isExecuting ? (
+                  <Box>
+                    <CircularProgress />
+                  </Box>
+                ) : (
+                  <>
+                    <TextField
+                      label="Стандартный поток вывода"
+                      fullWidth
+                      multiline
+                      value={stdout}
+                    />
+                    <TextField
+                      label="Поток ошибок"
+                      fullWidth
+                      multiline
+                      value={stderr}
+                      sx={{ marginTop: "10px" }}
+                    />
+                  </>
+                )}
+                <Button onClick={handleCreate}>Сохранить</Button>
               </Box>
             </Box>
-            <CompileResultDialog
+            {/* <CompileResultDialog
               isOpen={isDialogResultOpen}
               onClose={handleDialogClose}
               stdout={stdout}
               stderr={stderr}
-            />
+            /> */}
           </>
         )}
       </div>

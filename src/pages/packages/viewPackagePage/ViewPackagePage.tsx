@@ -27,6 +27,7 @@ const ViewPackagePage = () => {
   const [stderr, setStderr] = React.useState("");
   const [isDialogResultOpen, setIsDialogResultOpen] = React.useState(false);
 
+  const [isExecuting, setIsExecuting] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [error, setError] = React.useState("");
   const [message, setMessage] = React.useState("");
@@ -47,7 +48,7 @@ const ViewPackagePage = () => {
   const handleCompile = () => {
     // отправляем код на компиляцию
     // записываем результаты и открываем окно
-    setIsLoading(true);
+    setIsExecuting(true);
     api.pack
       .execute(pack!.code, stdin, cmdInput, pack!.language)
       .then(({ out, out_err }) => {
@@ -56,7 +57,7 @@ const ViewPackagePage = () => {
         handleDialogOpen();
       })
       .catch((err) => setMessage(err.response.data.message))
-      .finally(() => setIsLoading(false));
+      .finally(() => setIsExecuting(false));
   };
   const handleReview = () => {
     setIsLoading(true);
@@ -153,6 +154,7 @@ const ViewPackagePage = () => {
                 color: "#000",
               }}
             />
+            <Typography variant="h6">Раздел компиляции</Typography>
             <TextField
               label="Стандартный поток ввода"
               fullWidth
@@ -177,8 +179,30 @@ const ViewPackagePage = () => {
               sx={{ marginTop: "10px" }}
             />
             <Button onClick={handleCompile}>Скомпилировать</Button>
+            {isExecuting ? (
+              <Box>
+                <CircularProgress />
+              </Box>
+            ) : (
+              <>
+                <TextField
+                  label="Стандартный поток вывода"
+                  fullWidth
+                  multiline
+                  value={stdout}
+                />
+                <TextField
+                  label="Поток ошибок"
+                  fullWidth
+                  multiline
+                  value={stderr}
+                  sx={{ marginTop: "10px" }}
+                />
+              </>
+            )}
             {isAdmin ? (
               <>
+                <Typography variant="h6">Раздел оценивания</Typography>
                 <TextField
                   label="Ваш отзыв"
                   fullWidth
@@ -193,23 +217,25 @@ const ViewPackagePage = () => {
               </>
             ) : (
               user?.id === pack.user.id && (
-                <TextField
-                  label="Отзыв администратора"
-                  fullWidth
-                  multiline
-                  value={review}
-                  disabled
-                  sx={{ marginTop: "10px" }}
-                />
+                <>
+                  <Typography variant="h6">Раздел оценивания</Typography>
+                  <TextField
+                    label="Отзыв администратора"
+                    fullWidth
+                    multiline
+                    value={review}
+                    disabled
+                    sx={{ marginTop: "10px" }}
+                  />
+                </>
               )
             )}
-
-            <CompileResultDialog
+            {/* <CompileResultDialog
               isOpen={isDialogResultOpen}
               onClose={handleDialogClose}
               stdout={stdout}
               stderr={stderr}
-            />
+            /> */}
           </Box>
         ) : (
           <Typography>{error}</Typography>
