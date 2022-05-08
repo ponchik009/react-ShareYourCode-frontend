@@ -19,7 +19,7 @@
   min-width: 50vw;
   min-height: 50vh;
   // max-width: 90%;
-
+  max-width: 80vw;
 
   overflow-x: hidden;
   border: 1px solid black;
@@ -44,4 +44,12 @@
   background: linear-gradient(90deg, rgba(131,58,180,1) 0%, rgba(244,37,37,1) 50%, rgba(252,176,69,1) 100%);
 
   width: 50%;
+}
+
+.field {
+  &::placeholder {
+    color: "#f00";
+    font-style: italic;
+    
+  }
 }

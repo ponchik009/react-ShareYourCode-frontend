@@ -2,7 +2,7 @@ import { Box, Button, Switch, TextField, Typography } from "@mui/material";
 import React, { ChangeEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../../api";
-import Tip from "../../../components/Tip/Tip";
+import Tip from "../../../components/tooltip/Tip";
 
 import "../../Page.scss";
 

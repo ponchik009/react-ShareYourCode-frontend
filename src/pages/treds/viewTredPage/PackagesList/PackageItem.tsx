@@ -18,10 +18,11 @@ const PackageItem: React.FC<IProps> = ({ pack, onClick, index }) => {
           justifyContent: "space-between",
         }}
       >
-        <Typography>{`${index}. ---- ${
+        <Typography>{`${index}. Дата: ${
           String(pack.date).split("T")[0]
         }`}</Typography>
-        <Typography>{`\nАвтор ---- ${pack.user.name}`}</Typography>
+        <Divider flexItem orientation="vertical" />
+        <Typography>{`\nАвтор: ${pack.user.name}`}</Typography>
       </ListItemButton>
       <Divider />
     </>

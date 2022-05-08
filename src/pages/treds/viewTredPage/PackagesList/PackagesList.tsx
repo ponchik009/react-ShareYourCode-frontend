@@ -18,7 +18,7 @@ const PackagesList: React.FC<IProps> = ({ packages, groupId, tredId }) => {
   };
 
   return (
-    <List sx={{ overflowY: "scroll", height: "600px", width: "100%" }}>
+    <List>
       {packages.length > 0 ? (
         packages.map((pack, index) => (
           <PackageItem

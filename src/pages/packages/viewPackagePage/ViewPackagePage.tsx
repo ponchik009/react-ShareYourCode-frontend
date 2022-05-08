@@ -120,7 +120,7 @@ const ViewPackagePage = () => {
         {isLoading ? (
           <CircularProgress />
         ) : pack ? (
-          <Box sx={{ overflowY: "scroll", height: "800px" }}>
+          <Box>
             <Typography>{`Посылка с id = ${pack.id} авторства ${pack.user.name}`}</Typography>
             <Box
               sx={{
@@ -136,7 +136,7 @@ const ViewPackagePage = () => {
                 padding={15}
                 style={{
                   fontSize: 14,
-                  backgroundColor: "#f5f5f5",
+                  backgroundColor: "#C3BFA6",
                   fontFamily:
                     "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
                   color: "#000",
@@ -145,11 +145,13 @@ const ViewPackagePage = () => {
               />
             </Box>
             <TextField
-              disabled
               value={pack.language.name}
               fullWidth
               label="Язык"
-              sx={{ marginTop: "10px" }}
+              sx={{
+                marginTop: "10px",
+                color: "#000",
+              }}
             />
             <TextField
               label="Стандартный поток ввода"
@@ -159,7 +161,10 @@ const ViewPackagePage = () => {
               onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                 setStdin(event.target.value);
               }}
-              sx={{ marginTop: "10px" }}
+              sx={{
+                marginTop: "10px",
+              }}
+              className="field"
             />
             <TextField
               label="Аргументы командной строки"

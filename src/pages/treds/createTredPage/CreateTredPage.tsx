@@ -6,13 +6,12 @@ import {
   TextField,
   Button,
   CircularProgress,
-  Tooltip,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../../api";
 import { ITredCreate } from "../../../interfaces/entities";
 import Snack from "../../../components/Snack/Snack";
-import Tip from "../../../components/Tip/Tip";
+import Tip from "../../../components/tooltip/Tip";
 
 const CreateTredPage = () => {
   const [name, setName] = React.useState("");

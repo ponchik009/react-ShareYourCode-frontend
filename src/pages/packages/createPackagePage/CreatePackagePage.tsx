@@ -119,7 +119,7 @@ const CreatePackagePage = () => {
         ) : (
           <>
             <Typography>{`Создание посылки в треде id = ${tredId}`}</Typography>
-            <Box sx={{ overflowY: "scroll", height: "700px" }}>
+            <Box>
               <Box
                 sx={{
                   paddingLeft: "20px",
@@ -138,7 +138,7 @@ const CreatePackagePage = () => {
                   padding={15}
                   style={{
                     fontSize: 14,
-                    backgroundColor: "#f5f5f5",
+                    backgroundColor: "#C3BFA6",
                     fontFamily:
                       "ui-monospace,SFMono-Regular,SF Mono,Consolas,Liberation Mono,Menlo,monospace",
                     color: "#000",
