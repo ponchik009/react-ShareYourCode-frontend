@@ -6,11 +6,13 @@ import {
   TextField,
   Button,
   CircularProgress,
+  Tooltip,
 } from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
 import { api } from "../../../api";
 import { ITredCreate } from "../../../interfaces/entities";
 import Snack from "../../../components/Snack/Snack";
+import Tip from "../../../components/Tip/Tip";
 
 const CreateTredPage = () => {
   const [name, setName] = React.useState("");
@@ -95,15 +97,18 @@ const CreateTredPage = () => {
               sx={{ marginTop: "10px" }}
             />
             <TextField
-              label="Число пакетов"
+              label="Максимум посылок от участника"
               type="number"
               fullWidth
               value={maxPackages}
               onChange={handlePackagesChange}
               sx={{ marginTop: "10px" }}
             />
-            <Typography sx={{ marginTop: "10px" }}>
+            <Typography
+              sx={{ marginTop: "10px", display: "flex", alignItems: "center" }}
+            >
               Дата закрытия треда:
+              <Tip hint="Дата, после которой посылки нельзя будет отправить" />
             </Typography>
             <TextField
               type="date"
@@ -119,6 +124,7 @@ const CreateTredPage = () => {
             >
               <Typography sx={{ marginTop: "10px" }}>Публичный: </Typography>
               <Switch value={isPublic} onChange={handleIsPublicChange} />
+              <Tip hint="Если тред публичный, участники могут просматривать посылки друг друга" />
             </Box>
           </Box>
           <Button variant="contained" onClick={handleCreateClick}>

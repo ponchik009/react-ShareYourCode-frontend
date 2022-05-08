@@ -2,6 +2,7 @@ import { Box, Button, Switch, TextField, Typography } from "@mui/material";
 import React, { ChangeEventHandler } from "react";
 import { useNavigate } from "react-router-dom";
 import { api } from "../../../api";
+import Tip from "../../../components/Tip/Tip";
 
 import "../../Page.scss";
 
@@ -69,6 +70,7 @@ const CreateGroupPage = () => {
         >
           <Typography sx={{ marginTop: "10px" }}>Публичное: </Typography>
           <Switch value={isPublic} onChange={handleIsPublicChange} />
+          <Tip hint="Публичные сообщества отображаются в списке сообществ, в них может вступить любой желающий" />
         </Box>
       </Box>
       <Button variant="contained" onClick={handleCreateClick}>
