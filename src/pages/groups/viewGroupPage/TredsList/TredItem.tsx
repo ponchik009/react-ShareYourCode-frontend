@@ -1,5 +1,14 @@
 import React from "react";
-import { ListItemButton, Typography, Divider } from "@mui/material";
+import {
+  ListItemButton,
+  Typography,
+  Divider,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+  AccordionActions,
+  Button,
+} from "@mui/material";
 import { ITred, ITredItem } from "../../../../interfaces/entities";
 
 interface IProps {
@@ -10,9 +19,18 @@ interface IProps {
 const TredItem: React.FC<IProps> = ({ tred, onClick }) => {
   return (
     <>
-      <ListItemButton onClick={onClick}>
+      <Accordion sx={{ backgroundColor: "#D1C16D" }}>
+        <AccordionSummary>
+          <Typography variant="h6">{tred.name}</Typography>
+        </AccordionSummary>
+        <AccordionDetails>Описание: {tred.description}</AccordionDetails>
+        <AccordionActions>
+          <Button onClick={onClick}>Перейти в тред</Button>
+        </AccordionActions>
+      </Accordion>
+      {/* <ListItemButton onClick={onClick}>
         <Typography>{tred.name}</Typography>
-      </ListItemButton>
+      </ListItemButton> */}
       <Divider />
     </>
   );
