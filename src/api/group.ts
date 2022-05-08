@@ -19,7 +19,7 @@ const create = async (name: string, description: string, isOpen: boolean) => {
   }
 };
 
-const getGroups = async (groupType: GroupTypes) => {
+const getGroups = async (groupType: string) => {
   try {
     const response = await axios.get<IGroupItem[]>(`/group/${groupType}`);
     return response.data;
@@ -115,7 +115,7 @@ export interface IGroupApi {
     description: string,
     isOpen: boolean
   ) => Promise<undefined | number>;
-  getGroups: (groupType: GroupTypes) => Promise<IGroupItem[]>;
+  getGroups: (groupType: string) => Promise<IGroupItem[]>;
   getGroup: (id: number) => Promise<IGroup>;
   enter: (id: number) => Promise<IGroup>;
   invite: (id: number, email: string) => Promise<IGroup>;

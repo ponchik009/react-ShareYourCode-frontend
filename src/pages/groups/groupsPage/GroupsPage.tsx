@@ -10,14 +10,19 @@ import "../../Page.scss";
 import { IGroupItem } from "../../../interfaces/entities";
 import { GroupTypes } from "../../../api/group";
 import { api } from "../../../api";
+import { useSearchParams } from "react-router-dom";
 
 const GroupsPage = () => {
-  const [tab, setTab] = React.useState<GroupTypes>(GroupTypes.PUBLIC);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [tab, setTab] = React.useState(
+    searchParams.get("tab") || GroupTypes.PUBLIC
+  );
   const [groups, setGroups] = React.useState<IGroupItem[]>([]);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleChange = (event: React.SyntheticEvent, newValue: any) => {
     setTab(newValue);
+    setSearchParams({ tab: newValue });
   };
 
   React.useEffect(() => {
