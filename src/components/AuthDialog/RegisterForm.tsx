@@ -94,6 +94,9 @@ const RegisterForm: React.FC<IRegisterProps> = ({ signUp, onClose }) => {
     if (!name.length) {
       handleNameError("Заполните поле!");
       check = false;
+    } else if (name.length < 6) {
+      handleNameError("Имя должно быть не короче 6 символов!");
+      check = false;
     }
     if (!password.length) {
       handlePasswordError("Заполните поле!");
@@ -101,9 +104,8 @@ const RegisterForm: React.FC<IRegisterProps> = ({ signUp, onClose }) => {
     } else if (!comparePasswords()) {
       handlePasswordError("Пароли не совпадают!");
       check = false;
-    }
-    if (password.length < 6) {
-      handlePasswordError("Пароль должен быть длиннее 6 символов!");
+    } else if (password.length < 6) {
+      handlePasswordError("Пароль должен быть не короче 6 символов!");
       check = false;
     }
     return check;

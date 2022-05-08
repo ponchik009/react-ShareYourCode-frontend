@@ -30,7 +30,12 @@ const register = async (email: string, password: string, name: string) => {
       name,
     });
   } catch (err: any) {
-    throw new Error(err.response.data.message.join("|"));
+    const message = err.response.data.message;
+    if (typeof message === "object") {
+      throw new Error(message.join("|"));
+    } else {
+      throw new Error(message);
+    }
   }
 };
 
