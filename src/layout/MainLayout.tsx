@@ -82,6 +82,10 @@ const MainLayout: React.FC<ILayoutProps> = ({ children, isAuth }) => {
 
   React.useEffect(() => {
     getUser()(dispatch);
+    // @ts-ignore
+    window.handleSignIn = handleSignIn;
+    // @ts-ignore
+    window.handleSignUp = handleSignUp;
   }, []);
 
   if (isAuth === null) {

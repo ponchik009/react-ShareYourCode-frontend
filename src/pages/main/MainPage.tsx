@@ -1,8 +1,19 @@
-import { Box, Divider, List, ListItem, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  List,
+  ListItem,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import "./MainPage.scss";
 
-const MainPage = () => {
+interface IMainPageProps {
+  isAuth: null | boolean;
+}
+
+const MainPage: React.FC<IMainPageProps> = ({ isAuth }) => {
   return (
     <div className="page">
       <Box sx={{ maxWidth: "80vw" }}>
@@ -44,8 +55,29 @@ const MainPage = () => {
           <Divider orientation="vertical" flexItem />
           <Box>
             <List>
-              <ListItem>
-                <Typography>1. Войдите или зарегистрируйтесь</Typography>
+              <ListItem
+                sx={{
+                  backgroundColor: () => (isAuth ? "rgb(102, 187, 106)" : ""),
+                }}
+              >
+                <Typography>
+                  1.
+                  {isAuth ? (
+                    " Войдите "
+                  ) : (
+                    // @ts-ignore
+                    <Button onClick={window.handleSignIn}>Войдите</Button>
+                  )}
+                  или
+                  {isAuth ? (
+                    " зарегистрируйтесь"
+                  ) : (
+                    // @ts-ignore
+                    <Button onClick={window.handleSignUp}>
+                      зарегистрируйтесь
+                    </Button>
+                  )}
+                </Typography>
               </ListItem>
               <Divider />
               <ListItem>

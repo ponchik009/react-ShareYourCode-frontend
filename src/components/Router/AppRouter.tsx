@@ -20,8 +20,8 @@ interface IRouterProps {
 const AppRouter: React.FC<IRouterProps> = ({ isAuth }) => {
   return (
     <Routes>
-      <Route path="/" element={<MainPage />} />
-      <Route path="/home" element={<MainPage />} />
+      <Route path="/" element={<MainPage isAuth={isAuth} />} />
+      <Route path="/home" element={<MainPage isAuth={isAuth} />} />
       <Route
         element={
           <ProtectedRoute isAuth={isAuth} redirectPath="/unauthorized" />
