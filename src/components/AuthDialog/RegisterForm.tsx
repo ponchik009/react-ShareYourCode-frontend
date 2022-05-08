@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Button,
+  CircularProgress,
   DialogActions,
   DialogContent,
   TextField,
@@ -31,6 +32,8 @@ const RegisterForm: React.FC<IRegisterProps> = ({ signUp, onClose }) => {
   const [passwordErrorText, setPasswordErrorText] = React.useState("");
 
   const [error, setError] = React.useState("");
+
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmailError(false);
@@ -114,6 +117,7 @@ const RegisterForm: React.FC<IRegisterProps> = ({ signUp, onClose }) => {
   const handleRegister = async () => {
     if (!validate()) return;
 
+    setIsLoading(true);
     // запрос на регистрацию, изменение глобал стейта
     signUp(email, password, name)
       .then(() => {
@@ -123,55 +127,72 @@ const RegisterForm: React.FC<IRegisterProps> = ({ signUp, onClose }) => {
       .catch((err) => {
         console.log(err.message);
         setError(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   return (
     <>
-      <DialogContent sx={{ padding: "20px" }}>
-        {error && <Typography>{error}</Typography>}
-        <TextField
-          label="Email"
-          fullWidth
-          value={email}
-          onChange={handleEmailChange}
-          sx={{ marginTop: "20px" }}
-          error={emailError}
-          helperText={emailErrorText}
-        />
-        <TextField
-          label="Имя"
-          fullWidth
-          value={name}
-          onChange={handleNameChange}
-          sx={{ marginTop: "20px" }}
-          error={nameError}
-          helperText={nameErrorText}
-        />
-        <TextField
-          label="Пароль"
-          fullWidth
-          type="password"
-          sx={{ marginTop: "20px" }}
-          value={password}
-          onChange={handlePasswordChange}
-          error={passwordError}
-          helperText={passwordErrorText}
-        />
-        <TextField
-          label="Подтверждение пароля"
-          fullWidth
-          type="password"
-          sx={{ marginTop: "20px" }}
-          value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
-        />
-      </DialogContent>
-      <DialogActions>
-        <Button variant="text" onClick={handleRegister}>
-          Зарегистрироваться
-        </Button>
-      </DialogActions>
+      {isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <CircularProgress />
+        </div>
+      ) : (
+        <>
+          <DialogContent sx={{ padding: "20px" }}>
+            {error && <Typography>{error}</Typography>}
+            <TextField
+              label="Email"
+              fullWidth
+              value={email}
+              onChange={handleEmailChange}
+              sx={{ marginTop: "20px" }}
+              error={emailError}
+              helperText={emailErrorText}
+            />
+            <TextField
+              label="Имя"
+              fullWidth
+              value={name}
+              onChange={handleNameChange}
+              sx={{ marginTop: "20px" }}
+              error={nameError}
+              helperText={nameErrorText}
+            />
+            <TextField
+              label="Пароль"
+              fullWidth
+              type="password"
+              sx={{ marginTop: "20px" }}
+              value={password}
+              onChange={handlePasswordChange}
+              error={passwordError}
+              helperText={passwordErrorText}
+            />
+            <TextField
+              label="Подтверждение пароля"
+              fullWidth
+              type="password"
+              sx={{ marginTop: "20px" }}
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button variant="text" onClick={handleRegister}>
+              Зарегистрироваться
+            </Button>
+          </DialogActions>
+        </>
+      )}
     </>
   );
 };
