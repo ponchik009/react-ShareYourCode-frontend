@@ -20,13 +20,13 @@ Linux (тестировалось на Debian), Windows. В случае Windows
 ## Инструкция по сборке
 
 ### Клоинрование репозитория
-git clone https://github.com/ponchik009/react-ShareYourCode-frontend/
+$ git clone https://github.com/ponchik009/react-ShareYourCode-frontend/
 
 ### Переход в папку проекта
-cd react-ShareYourCode-frontend
+$ cd react-ShareYourCode-frontend
 
 ### Установка пакетов
-npm install
+$ npm install
 
 ### Найтрока конфигурации
 <p>В корне проекта создаем файл .env</p>
@@ -38,7 +38,7 @@ npm install
 </ul>
 
 ### Сборка статических файлов
-npm run build
+$ npm run build
 
 ###  Итого
 После сборки, в корне проекта будет находиться папка <b>build</b> с собранным проектом
